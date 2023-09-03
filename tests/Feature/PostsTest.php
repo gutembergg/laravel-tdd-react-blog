@@ -2,11 +2,11 @@
 
 namespace Tests\Feature;
 
+use Tests\TestCase;
 use App\Models\Post;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
-use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class PostsTest extends TestCase
 {
@@ -17,7 +17,7 @@ class PostsTest extends TestCase
     {
         $posts = Post::factory(10)->create();
 
-        $response = $this->get(route('posts.index'));
+        $response = $this->getJson(route('posts.index'));
 
         $response->assertStatus(200);
 
@@ -35,12 +35,44 @@ class PostsTest extends TestCase
                     '0.link' => 'string',
                     '0.comment_status' => 'boolean'
                 ])
-                ->where('0.title', $post->title)
-                ->where('0.slug', $post->slug)
-                ->where('0.content', $post->content)
-                ->where('0.link', $post->link)
-                ->where('0.comment_status', $post->comment_status)
+                ->whereAll([
+                    '0.title' =>  $post->title,
+                    '0.slug' => $post->slug,
+                    '0.content' => $post->content,
+                    '0.link' => $post->link,
+                    '0.comment_status' => $post->comment_status
+                ])
+               
 
+        );
+    }
+
+    public function test_posts_show_route(): void
+    {
+        $post = Post::factory(1)->createOne();
+
+        $response = $this->getJson(route('posts.show', ['slug' => $post->slug]));
+
+        $response->assertStatus(200);
+
+        $response->assertJson(fn (AssertableJson $json) =>
+            $json
+                ->hasAll(['title', 'slug', 'content', 'link', 'comment_status'])
+                ->whereAllType([
+                    'title' => 'string',
+                    'slug' => 'string',
+                    'content' => 'string',
+                    'link' => 'string',
+                    'comment_status' => 'boolean'
+                ])
+                ->whereAll([
+                    'title' =>  $post->title,
+                    'slug' => $post->slug,
+                    'content' => $post->content,
+                    'link' => $post->link,
+                    'comment_status' => $post->comment_status
+                ])
+               
         );
     }
 }
