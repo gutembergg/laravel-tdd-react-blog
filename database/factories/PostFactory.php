@@ -3,9 +3,9 @@
 namespace Database\Factories;
 
 use App\Enums\Post\PostStatusEnum;
-use Illuminate\Support\Str;
+use App\Models\Author;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Post>
@@ -28,7 +28,8 @@ class PostFactory extends Factory
             'link' => route('posts.show', ['slug' => $slug]),
             'status' => PostStatusEnum::PUBLISH->value,
             'slug' => $slug,
-            'comment_status' => false
+            'comment_status' => false,
+            'author_id' => Author::factory(),
         ];
     }
 }

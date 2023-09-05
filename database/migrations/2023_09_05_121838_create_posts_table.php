@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\Post\PostStatusEnum;
+use App\Models\Author;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,6 +21,8 @@ return new class extends Migration
             $table->string('status')->default(PostStatusEnum::PUBLISH->value);
             $table->string('slug')->unique();
             $table->boolean('comment_status')->default(false);
+
+            $table->foreignIdFor(Author::class)->nullable()->constrained()->onDelete('cascade');
 
             $table->timestamps();
         });
