@@ -13,6 +13,6 @@ class ShowController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return Post::where('slug', $request->slug)->get();
+         return Post::where('slug', $request->slug)->get()->first();
     }
 }

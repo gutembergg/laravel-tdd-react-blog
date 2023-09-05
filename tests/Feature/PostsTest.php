@@ -57,7 +57,7 @@ class PostsTest extends TestCase
 
         $response->assertJson(fn (AssertableJson $json) =>
             $json
-                ->hasAll(['title', 'slug', 'content', 'link', 'comment_status'])
+                ->hasAll(['title', 'slug', 'content', 'link', 'comment_status'])->etc()
                 ->whereAllType([
                     'title' => 'string',
                     'slug' => 'string',
