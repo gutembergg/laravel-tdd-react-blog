@@ -21,8 +21,9 @@ return new class extends Migration
             $table->string('status')->default(PostStatusEnum::PUBLISH->value);
             $table->string('slug')->unique();
             $table->boolean('comment_status')->default(false);
+            $table->integer('author_id')->nullable()->unsigned()->constrained()->onDelete('cascade');
 
-            $table->foreignIdFor(Author::class)->nullable()->constrained()->onDelete('cascade');
+            //$table->foreignIdFor(Author::class)->nullable()->constrained()->onDelete('cascade');
 
             $table->timestamps();
         });
