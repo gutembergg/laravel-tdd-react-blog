@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Enums\Role\RoleEnum;
+use App\Models\Author;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -21,22 +22,33 @@ class DatabaseSeeder extends Seeder
 
         $editorRole = Role::findByName(RoleEnum::EDITOR->value);
         
+        /**
+         * Creation de user editor author and posts
+         */
         User::factory(9)
             ->create()
             ->each(
                 fn (User $user) => $user->assignRole($editorRole)
-            )->each(fn (User $user) => Post::factory()->create([
-                'author_id' => $user->id
+            )->each(fn (User $user) => Author::factory()->has(Post::factory(5))->create([
+                'name' => $user->name,
+                'user_id' => $user->id
             ]));
 
-
+        /**
+         * Creation de user admin with posts
+         */
         $superAdmin = User::factory()->create([
             'name' => 'Super Admin',
             'email' => 'superadmin@mail.com',
         ])->assignRole(Role::findByName(RoleEnum::SUPER_ADMIN->value));
 
-        Post::factory()->create([
-            'author_id' => $superAdmin->id
+        $author = Author::factory()->create([
+            'name' => $superAdmin->name,
+            'user_id' => $superAdmin->name,
+        ]);
+        
+        Post::factory(5)->create([
+            'author_id' => $author->id
         ]);
     }
 }

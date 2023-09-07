@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Author;
 use App\Models\Post;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -13,7 +14,11 @@ class PostsTest extends TestCase
 
     public function test_posts_index_route(): void
     {
-        $posts = Post::factory(10)->create();
+       $author = Author::factory()->state([
+            'name' => 'AUTHOR_TEST_NAME',
+        ]);
+
+        $posts = Post::factory(10)->for($author)->create();
 
         $response = $this->getJson(route('posts.index'));
 
@@ -24,41 +29,49 @@ class PostsTest extends TestCase
         $post = $posts->first();
 
         $response->assertJson(fn (AssertableJson $json) => $json
-            ->hasAll(['0.title', '0.slug', '0.content', '0.link', '0.comment_status'])
-            ->whereAllType([
-                '0.title' => 'string',
-                '0.slug' => 'string',
-                '0.content' => 'string',
-                '0.link' => 'string',
-                '0.comment_status' => 'boolean',
-            ])
-            ->whereAll([
-                '0.title' => $post->title,
-                '0.slug' => $post->slug,
-                '0.content' => $post->content,
-                '0.link' => $post->link,
-                '0.comment_status' => $post->comment_status,
-            ])
-
+            ->first(fn (AssertableJson $json) =>
+                $json->whereAll([
+                    'title' => $post->title,
+                    'slug' => $post->slug,
+                    'content' => $post->content,
+                    'link' => $post->link,
+                    'comment_status' => $post->comment_status,
+                    'author_id' => $post->author_id
+                ])
+                ->hasAll(['title', 'slug', 'content', 'link', 'comment_status', 'author_id'])->etc()
+                ->whereAllType([
+                    'title' => 'string',
+                    'slug' => 'string',
+                    'content' => 'string',
+                    'link' => 'string',
+                    'comment_status' => 'boolean',
+                    'author_id' => 'integer'
+                ])
+            )
         );
     }
 
     public function test_posts_show_route(): void
     {
-        $post = Post::factory(1)->createOne();
+        $author = Author::factory()->state([
+            'name' => 'AUTHOR_TEST_NAME',
+        ]);
+
+        $post = Post::factory(1)->for($author)->createOne();
 
         $response = $this->getJson(route('posts.show', ['slug' => $post->slug]));
 
         $response->assertStatus(200);
 
         $response->assertJson(fn (AssertableJson $json) => $json
-            ->hasAll(['title', 'slug', 'content', 'link', 'comment_status'])->etc()
+            ->hasAll(['title', 'slug', 'content', 'link', 'comment_status', 'author_id'])->etc()
             ->whereAllType([
                 'title' => 'string',
                 'slug' => 'string',
                 'content' => 'string',
                 'link' => 'string',
                 'comment_status' => 'boolean',
+                'author_id' => 'integer'
             ])
             ->whereAll([
                 'title' => $post->title,
@@ -66,6 +79,7 @@ class PostsTest extends TestCase
                 'content' => $post->content,
                 'link' => $post->link,
                 'comment_status' => $post->comment_status,
+                'author_id' => $post->author_id
             ])
 
         );
@@ -78,8 +92,8 @@ class PostsTest extends TestCase
 
         $response = $this->getJson(route('posts.show', ['slug' => 'INVALID_SLUG']));
 
-        $response->assertStatus(404);
-
+        $response->assertNotFound();
+        
         $response->assertJson(fn (AssertableJson $json) => $json
             ->hasAll(['error', 'message'])
             ->whereAllType([

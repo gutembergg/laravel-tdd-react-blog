@@ -11,7 +11,8 @@ class ShowController extends Controller
 {
     public function __invoke(Request $request): Post|JsonResponse
     {
-        $post = Post::where('slug', $request->slug)->get()->first();
+        $postQuery = Post::query();
+        $post = $postQuery->where('slug', $request->slug)->with('author')->get()->first();
 
         if (! $post) {
             return response()->json([
@@ -20,6 +21,6 @@ class ShowController extends Controller
             ], 404);
         }
 
-        return $post;
+        return response()->json($post);
     }
 }
