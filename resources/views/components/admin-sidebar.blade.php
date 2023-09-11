@@ -1,4 +1,4 @@
-<aside :class="{'-translate-x-full': !open}" 
+<aside :class="{'-translate-x-full': !open, 'w-10': !open}" 
     class="bg-slate-500 text-gray-50 h-screen p-5 w-80 left-0 transform 
     overflow-y-auto transition ease-in-out duration-200 shadow-md">
     {{-- Logo --}}
