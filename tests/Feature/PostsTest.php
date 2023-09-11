@@ -36,16 +36,14 @@ class PostsTest extends TestCase
                     'content' => $post->content,
                     'link' => $post->link,
                     'comment_status' => $post->comment_status,
-                    'author_id' => $post->author_id
                 ])
-                ->hasAll(['title', 'slug', 'content', 'link', 'comment_status', 'author_id'])->etc()
+                ->hasAll(['title', 'slug', 'content', 'link', 'comment_status', 'author'])->etc()
                 ->whereAllType([
                     'title' => 'string',
                     'slug' => 'string',
                     'content' => 'string',
                     'link' => 'string',
                     'comment_status' => 'boolean',
-                    'author_id' => 'integer'
                 ])
             )
         );
