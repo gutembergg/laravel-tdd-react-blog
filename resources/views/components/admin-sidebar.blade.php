@@ -1,4 +1,4 @@
-<aside :class="{'-translate-x-full': !open, 'w-10': !open}" 
+<aside :class="{'-translate-x-full': !open, 'w-0': !open}" 
     class="bg-slate-500 text-gray-50 h-screen p-5 w-80 left-0 transform 
     overflow-y-auto transition ease-in-out duration-200 shadow-md">
     {{-- Logo --}}
@@ -19,7 +19,7 @@
     </div>
 </aside>
 
-<div :class="{'hidden': open}">
+<div :class="{'hidden': open, 'mr-8': !open}">
     <x-admin-sidebar-btn 
         class="h-10 absolute mt-6 left-4 fill-current text-gray-800 dark:text-gray-200"
         @click="open = true"

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Posts\Web\CreateUpdateController;
+use App\Http\Controllers\Posts\Web\StoreController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('post', [CreateUpdateController::class, 'store'])->name('store');
+Route::post('post', StoreController::class)->name('store');

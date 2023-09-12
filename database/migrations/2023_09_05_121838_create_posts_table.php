@@ -23,8 +23,6 @@ return new class extends Migration
             $table->boolean('comment_status')->default(false);
             $table->integer('author_id')->nullable()->unsigned()->constrained()->onDelete('cascade');
 
-            //$table->foreignIdFor(Author::class)->nullable()->constrained()->onDelete('cascade');
-
             $table->timestamps();
         });
     }
