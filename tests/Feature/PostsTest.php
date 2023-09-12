@@ -134,7 +134,7 @@ class PostsTest extends TestCase
             'author_id' => $authorId
         ]));
 
-        $response->assertOk();
+        $response->assertRedirect();
 
         $insertedPost = Post::first();
         $this->assertEquals($insertedPost->title, $post->title);
