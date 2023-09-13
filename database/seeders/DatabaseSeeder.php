@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeder::class);
 
         $editorRole = Role::findByName(RoleEnum::EDITOR->value);
-        
+
         /**
          * Creation de user editor author and posts
          */
@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
                 fn (User $user) => $user->assignRole($editorRole)
             )->each(fn (User $user) => Author::factory()->has(Post::factory(5))->create([
                 'name' => $user->name,
-                'user_id' => $user->id
+                'user_id' => $user->id,
             ]));
 
         /**
@@ -46,9 +46,9 @@ class DatabaseSeeder extends Seeder
             'name' => $superAdmin->name,
             'user_id' => $superAdmin->name,
         ]);
-        
+
         Post::factory(5)->create([
-            'author_id' => $author->id
+            'author_id' => $author->id,
         ]);
     }
 }

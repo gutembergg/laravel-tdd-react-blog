@@ -17,7 +17,7 @@ class Post extends Model
         'title',
         'content',
         'author_id',
-        'status'
+        'status',
     ];
 
     protected $casts = [
@@ -32,19 +32,19 @@ class Post extends Model
         );
     } */
 
-    static function slug($title): string
+    public static function slug(string $title): string
     {
         return Str::slug(strtolower($title));
     }
 
-    static function link($title): string
+    public static function link(string $title): string
     {
         return route(
             'posts.show',
             [
                 'slug' => self::slug($title),
             ]
-            );
+        );
     }
 
     public function author(): BelongsTo
@@ -52,10 +52,8 @@ class Post extends Model
         return $this->belongsTo(Author::class);
     }
 
-
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class);
     }
-
 }

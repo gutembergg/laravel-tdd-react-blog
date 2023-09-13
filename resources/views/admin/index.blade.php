@@ -5,13 +5,11 @@
     <x-admin-sidebar />
 
     {{-- Content --}}
-    <div class="flex text-gray-50 p-7">
+    <section class="flex flex-1 text-gray-50 p-7">
 
-       <section>
-            <x-store-post-form />
-       </section>
+        <x-store-post-form />
         
-    </div>
+    </section>
 </div>
           
 </x-admin-layout>

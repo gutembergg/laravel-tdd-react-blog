@@ -1,7 +1,6 @@
 <?php
 
 use App\Enums\Post\PostStatusEnum;
-use App\Models\Author;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

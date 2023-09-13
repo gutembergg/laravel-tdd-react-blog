@@ -7,7 +7,6 @@ use App\Http\Resources\Api\PostResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Collection;
 
 class IndexController extends Controller
 {
@@ -17,7 +16,6 @@ class IndexController extends Controller
     public function __invoke(Request $request): JsonResource
     {
         $posts = Post::with('author')->limit(8)->get();
-
 
         return PostResource::collection($posts);
     }

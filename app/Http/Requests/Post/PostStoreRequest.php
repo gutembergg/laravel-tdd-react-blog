@@ -17,13 +17,13 @@ class PostStoreRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<int, string>|string>
      */
     public function rules(): array
     {
         return [
             'title' => ['required', 'min:4'],
-            'content' => ['required'],
+            'content' => ['required', 'min:4'],
         ];
     }
 }

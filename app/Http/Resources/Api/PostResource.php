@@ -21,8 +21,8 @@ class PostResource extends JsonResource
             'link' => $this->link,
             'comment_status' => $this->comment_status,
             'slug' => $this->slug,
-            'author' => new AuthorResource($this->whenLoaded('author'))
-            
+            'author' => new AuthorResource($this->whenLoaded('author')),
+
         ];
     }
 }
