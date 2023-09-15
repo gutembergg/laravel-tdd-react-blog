@@ -19,20 +19,23 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call(RoleSeeder::class);
-
-        $editorRole = Role::findByName(RoleEnum::EDITOR->value);
+        $this->call(CategoriesSeeder::class);
 
         /**
          * Creation de user editor author and posts
          */
+        $editorRole = Role::findByName(RoleEnum::EDITOR->value);
+
         User::factory(9)
             ->create()
             ->each(
                 fn (User $user) => $user->assignRole($editorRole)
-            )->each(fn (User $user) => Author::factory()->has(Post::factory(5))->create([
+            )
+            ->each(fn (User $user) => Author::factory()->has(Post::factory()->count(5))->create([
                 'name' => $user->name,
                 'user_id' => $user->id,
-            ]));
+            ])
+            );
 
         /**
          * Creation de user admin with posts
@@ -42,13 +45,10 @@ class DatabaseSeeder extends Seeder
             'email' => 'superadmin@mail.com',
         ])->assignRole(Role::findByName(RoleEnum::SUPER_ADMIN->value));
 
-        $author = Author::factory()->create([
+        Author::factory()->has(Post::factory()->count(5))->create([
             'name' => $superAdmin->name,
-            'user_id' => $superAdmin->name,
+            'user_id' => $superAdmin->id,
         ]);
 
-        Post::factory(5)->create([
-            'author_id' => $author->id,
-        ]);
     }
 }

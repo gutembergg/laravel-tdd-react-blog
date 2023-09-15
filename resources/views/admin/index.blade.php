@@ -5,9 +5,9 @@
     <x-admin-sidebar />
 
     {{-- Content --}}
-    <section class="flex flex-1 text-gray-50 p-7">
+    <section class="flex text-gray-50 p-7">
 
-        <x-store-post-form />
+        <x-store-post-form :categories="$categories" />
         
     </section>
 </div>

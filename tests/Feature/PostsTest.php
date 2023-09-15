@@ -108,7 +108,7 @@ class PostsTest extends TestCase
         );
     }
 
-    public function test_posts_store_route(): void
+    public function test_posts_with_author_store_route(): void
     {
         $this->seed(RoleSeeder::class);
 
@@ -118,18 +118,21 @@ class PostsTest extends TestCase
             fake()->randomElement([RoleEnum::SUPER_ADMIN->value, RoleEnum::EDITOR->value])
         );
 
+        $author = Author::factory()->create([
+            'name' => $user->name,
+            'user_id' => $user->id,
+        ]);
+
         $post->title = 'TEST TITLE ONE';
         $post->content = fake()->paragraph();
         $post->slug = $slug = $post::slug($post->title);
         $post->link = $link = $post::link($post->title);
-        $post->author_id = $authorId = $user->id;
 
         $response = $this->actingAs($user)->postJson(route('posts.store', [
             'title' => $post->title,
             'content' => $post->content,
             'slug' => $slug,
             'link' => $link,
-            'author_id' => $authorId,
         ]));
 
         $response->assertValid(['title', 'content']);
@@ -141,10 +144,11 @@ class PostsTest extends TestCase
         $this->assertEquals($insertedPost->content, $post->content);
         $this->assertEquals($insertedPost->slug, $post->slug);
         $this->assertEquals($insertedPost->link, $post->link);
-        $this->assertEquals($insertedPost->author_id, $post->author_id);
+        $this->assertEquals($insertedPost->author_id, $author->id);
+
     }
 
-    public function test_erros_posts_store_route(): void
+    public function test_posts_without_author_store_route(): void
     {
         $this->seed(RoleSeeder::class);
 
@@ -158,14 +162,41 @@ class PostsTest extends TestCase
         $post->content = fake()->paragraph();
         $post->slug = $slug = $post::slug($post->title);
         $post->link = $link = $post::link($post->title);
-        $post->author_id = $authorId = $user->id;
+
+        $response = $this->actingAs($user)->postJson(route('posts.store', [
+            'title' => $post->title,
+            'content' => $post->content,
+            'slug' => $slug,
+            'link' => $link,
+        ]));
+
+        $response->assertValid(['title', 'content']);
+
+        $response->assertRedirect();
+
+        $insertedPost = Post::first();
+        $this->assertEquals($insertedPost->title, $post->title);
+        $this->assertEquals($insertedPost->content, $post->content);
+        $this->assertEquals($insertedPost->slug, $post->slug);
+        $this->assertEquals($insertedPost->link, $post->link);
+
+        $this->assertDatabaseCount('authors', 1);
+    }
+
+    public function test_erros_posts_store_route(): void
+    {
+        $this->seed(RoleSeeder::class);
+
+        $user = User::factory()->create()->assignRole(
+            fake()->randomElement([RoleEnum::SUPER_ADMIN->value, RoleEnum::EDITOR->value])
+        );
 
         $response = $this->actingAs($user)->postJson(route('posts.store', [
             'title' => '1',
             'content' => '',
-            'slug' => $slug,
-            'link' => $link,
-            'author_id' => $authorId,
+            'slug' => 'SLUG',
+            'link' => 'LINK',
+            'author_id' => $user->id,
         ]));
 
         $response->assertInvalid(['title', 'content']);
