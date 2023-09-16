@@ -4,8 +4,10 @@ namespace Tests\Feature;
 
 use App\Enums\Role\RoleEnum;
 use App\Models\Author;
+use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
+use Database\Seeders\CategoriesSeeder;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -111,6 +113,7 @@ class PostsTest extends TestCase
     public function test_posts_with_author_store_route(): void
     {
         $this->seed(RoleSeeder::class);
+        $this->seed(CategoriesSeeder::class);
 
         $post = new Post();
 
@@ -125,17 +128,22 @@ class PostsTest extends TestCase
 
         $post->title = 'TEST TITLE ONE';
         $post->content = fake()->paragraph();
-        $post->slug = $slug = $post::slug($post->title);
-        $post->link = $link = $post::link($post->title);
+        $slug = $post->slug = $post->title;
+        $link = $post->link = $post->title;
+
+        $categories = [...Category::all()->pluck('id')->random(2)];
 
         $response = $this->actingAs($user)->postJson(route('posts.store', [
             'title' => $post->title,
             'content' => $post->content,
             'slug' => $slug,
             'link' => $link,
+            'categories' => $categories
         ]));
 
-        $response->assertValid(['title', 'content']);
+        $this->assertDatabaseCount('category_post', 2);
+
+        $response->assertValid(['title', 'content', 'categories']);
 
         $response->assertRedirect();
 
@@ -151,6 +159,7 @@ class PostsTest extends TestCase
     public function test_posts_without_author_store_route(): void
     {
         $this->seed(RoleSeeder::class);
+        $this->seed(CategoriesSeeder::class);
 
         $post = new Post();
 
@@ -160,17 +169,22 @@ class PostsTest extends TestCase
 
         $post->title = 'TEST TITLE ONE';
         $post->content = fake()->paragraph();
-        $post->slug = $slug = $post::slug($post->title);
-        $post->link = $link = $post::link($post->title);
+        $slug = $post->slug = $post->title;
+        $link = $post->link = $post->title;
+
+        $categories = [...Category::all()->pluck('id')->random(2)];
 
         $response = $this->actingAs($user)->postJson(route('posts.store', [
             'title' => $post->title,
             'content' => $post->content,
             'slug' => $slug,
             'link' => $link,
+            'categories' => $categories
         ]));
 
-        $response->assertValid(['title', 'content']);
+        $this->assertDatabaseCount('category_post', 2);
+
+        $response->assertValid(['title', 'content', 'categories']);
 
         $response->assertRedirect();
 

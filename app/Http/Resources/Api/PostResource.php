@@ -22,6 +22,7 @@ class PostResource extends JsonResource
             'comment_status' => $this->comment_status,
             'slug' => $this->slug,
             'author' => new AuthorResource($this->whenLoaded('author')),
+            'categories' => CategoryResource::collection($this->whenLoaded('categories'))
 
         ];
     }

@@ -18,8 +18,8 @@ class StoreController extends Controller
 
         $post->title = $request->input('title');
         $post->content = $request->input('content');
-        $post->slug = Post::slug($post->title);
-        $post->link = Post::link($post->title);
+        $post->slug = $post->title;
+        $post->link = $post->title;
 
         $author = Author::where('user_id', $user->id)->first();
 
@@ -31,7 +31,9 @@ class StoreController extends Controller
         }
 
         $post->author()->associate($author ? $author : $newAuthor);
+
         $post->save();
+        $post->categories()->sync($request->input('categories'));
 
         return redirect()->back();
     }

@@ -15,7 +15,7 @@ class IndexController extends Controller
      */
     public function __invoke(Request $request): JsonResource
     {
-        $posts = Post::with('author')->limit(8)->get();
+        $posts = Post::with('author', 'categories')->limit(8)->get();
 
         return PostResource::collection($posts);
     }

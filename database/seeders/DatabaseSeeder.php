@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Enums\Role\RoleEnum;
 use App\Models\Author;
+use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -25,13 +26,15 @@ class DatabaseSeeder extends Seeder
          * Creation de user editor author and posts
          */
         $editorRole = Role::findByName(RoleEnum::EDITOR->value);
+        $categories = Category::all();
 
         User::factory(9)
             ->create()
             ->each(
                 fn (User $user) => $user->assignRole($editorRole)
             )
-            ->each(fn (User $user) => Author::factory()->has(Post::factory()->count(5))->create([
+            ->each(fn (User $user) => Author::factory()
+                ->has(Post::factory()->count(5)->hasAttached($categories->random(2)))->create([
                 'name' => $user->name,
                 'user_id' => $user->id,
             ])

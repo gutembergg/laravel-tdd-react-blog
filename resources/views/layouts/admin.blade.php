@@ -18,10 +18,15 @@
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             @include('layouts.navigation') 
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+           <div class="flex">
+                <x-admin-sidebar /> 
+
+                <!-- Page Content -->
+                <main>
+                    @include('shared.flash')
+                    @yield('content')
+                </main>
+           </div>
         </div>
     </body>
 </html>

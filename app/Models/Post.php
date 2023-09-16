@@ -24,26 +24,24 @@ class Post extends Model
         'comment_status' => 'boolean',
     ];
 
-    /* static function slug(): Attribute
+    public function slug(): Attribute
     {
         return Attribute::make(
             get: fn (string $value) => $value,
-            set: fn (string $value) => Str::slug(strtolower($this->title)),
+            set: fn (string $value) => Str::slug(strtolower($value)),
         );
-    } */
-
-    public static function slug(string $title): string
-    {
-        return Str::slug(strtolower($title));
     }
 
-    public static function link(string $title): string
+    public static function link(): Attribute
     {
-        return route(
-            'posts.show',
-            [
-                'slug' => self::slug($title),
-            ]
+        return Attribute::make(
+            get: fn (string $value) => $value,
+            set: fn (string $value) => route(
+                'posts.show',
+                [
+                    'slug' => Str::slug(strtolower($value)),
+                ]
+            ),
         );
     }
 

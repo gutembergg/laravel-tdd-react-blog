@@ -1,11 +1,11 @@
 @props(['categories'])
 
-<form action="{{ route('posts.store') }}" method="post" class="space-y-2 w-full max-w-lg">
+<form action="{{ route('posts.store') }}" method="post" class="flex md:flex flex-col space-y-2">
     @csrf
     @method('post')
-    <h2 class="text-2xl font-extrabold">Add a new Post</h2>
+    <h2 class="text-2xl dark:text-white font-extrabold">Add a new Post</h2>
 
-    <div class="flex">
+    <div class="flex md:flex-row flex-col">
         <div>
             <div>
                 <x-input-label for="title" :value="'Title'" class="pb-2" />
@@ -24,14 +24,17 @@
                 <x-input-error :messages="$errors->get('content')" class="mt-2" />
 
             </div>
+
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 w-full mt-4 text-white font-bold py-2 px-4 rounded-md">
+                Register
+              </button>
         </div>
         <div class="pl-6">
             <x-input-label for="categories" :value="'Categories'" class="pb-2" />
-            <x-input-select :options="$categories" />
+            <x-input-select :options="$categories" name="categories" />
         </div>
     </div>
-    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-    Register
-</button>
+   
+   
 </form>
     
