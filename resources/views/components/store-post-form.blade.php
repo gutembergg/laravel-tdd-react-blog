@@ -48,6 +48,10 @@
                     <x-input-label for="categories" :value="'Categories'" class="pb-2" />
                     <x-input-select :options="$categories" name="categories" />
                 </div>
+
+                <div>
+                    <x-input-files name="media" />
+                </div>
             </div>
         </div>
       </div>

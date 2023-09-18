@@ -1,9 +1,9 @@
 @props(['posts'])
 
-<ul>
+<ul class="pt-8">
     @foreach ($posts as $post)
         
-        <li>{{ $post->title }}</li>
+        <li class="text-white font-bold">{{ $post->title }}</li>
 
     @endforeach
 </ul>

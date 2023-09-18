@@ -1,6 +1,6 @@
 <div class="flex" x-data="{ open: true }">
     <aside :class="{'-translate-x-full': !open, 'w-72': open, 'w-20': !open}" 
-        class="bg-slate-500 text-gray-500  h-screen p-5 left-0 transform
+        class="bg-slate-800 h-screen p-5 left-0 transform
         overflow-y-auto transition duration-200 shadow-md">
         {{-- Logo --}}
         <div class="flex justify-between items-center px-2 cursor-pointer">

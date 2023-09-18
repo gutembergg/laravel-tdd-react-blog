@@ -8,7 +8,7 @@ use App\Models\Post;
 
 class RegisterPost {
 
-    public function handle(PostStoreRequest $request): void
+    public function handle(PostStoreRequest $request): Post
     {
         $post = new Post();
         $user = auth()->user();
@@ -32,5 +32,7 @@ class RegisterPost {
 
         $post->save();
         $post->categories()->sync($request->input('categories'));
+
+        return $post;
     }
 }

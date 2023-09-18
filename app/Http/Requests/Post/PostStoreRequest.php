@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Post;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\File;
 
 class PostStoreRequest extends FormRequest
 {
@@ -25,6 +26,10 @@ class PostStoreRequest extends FormRequest
             'title' => ['required', 'min:4'],
             'content' => ['required', 'min:4'],
             'categories' => ['array', 'exists:categories,id'],
+            'media' => [
+                File::types(['jpg', 'png', 'jpeg'])
+                    ->max(5 * 1024)
+            ]
         ];
     }
 }
