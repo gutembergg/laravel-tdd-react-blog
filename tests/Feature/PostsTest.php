@@ -215,4 +215,21 @@ class PostsTest extends TestCase
 
         $response->assertInvalid(['title', 'content']);
     }
+
+    public function test_erros_posts_store_userRole_route(): void
+    {
+        $this->seed(RoleSeeder::class);
+
+        $user = User::factory()->create()->assignRole(RoleEnum::USER->value);
+
+        $response = $this->actingAs($user)->postJson(route('posts.store', [
+            'title' => 'user role title',
+            'content' => 'user role content',
+            'slug' => 'SLUG',
+            'link' => 'LINK',
+            'author_id' => $user->id,
+        ]));
+
+        $response->assertForbidden();
+    }
 }

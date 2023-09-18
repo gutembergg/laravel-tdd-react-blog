@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.ts-control {
+    background: transparent;
+    border-color: rgb(55 65 81);
+
+}
