@@ -1,5 +1,6 @@
 <?php
 
+use App\Actions\Post\GetByUser;
 use App\Http\Controllers\ProfileController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
@@ -10,8 +11,9 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     $categories = Category::all();
+    $posts = (new GetByUser())->handle();
 
-    return view('admin.index', ['categories' => $categories]);
+    return view('admin.index', ['categories' => $categories, 'posts' => $posts]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

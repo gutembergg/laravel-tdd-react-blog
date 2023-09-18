@@ -1,17 +1,10 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="p-8">
+    <div class="p-8 md:min-w-[900px]">
         <x-store-post-form :categories="$categories" />
+        <x-admin-last-posts :posts="$posts" />
     </div>
 @endsection
 
 
-{{-- <x-admin-layout>
-
-<div class="flex" x-data="{ open: true }">
-    <x-admin-sidebar />
-
-</div>
-          
-</x-admin-layout> --}}
