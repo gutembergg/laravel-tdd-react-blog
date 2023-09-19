@@ -6,8 +6,6 @@ use App\Actions\Post\RegisterPost;
 use App\Actions\Post\UploadImages;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Post\PostStoreRequest;
-use App\Models\Author;
-use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
 
 class StoreController extends Controller
@@ -16,8 +14,10 @@ class StoreController extends Controller
     {
      
         $post = (new RegisterPost())->handle($request);
-
-        $iames = (new UploadImages())->handle($request);
+        $image = (new UploadImages())->handle($request);
+        
+        $image->post()->associate($post);
+        $image->save();
 
         return redirect()->back();
     }

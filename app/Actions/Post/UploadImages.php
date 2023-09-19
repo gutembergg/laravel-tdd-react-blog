@@ -2,6 +2,7 @@
 
 namespace App\Actions\Post;
 
+use App\DTOS\File;
 use App\Http\Requests\Post\PostStoreRequest;
 use App\Models\Media;
 
@@ -11,22 +12,30 @@ class UploadImages {
     {
         $media = $request->file('media');
 
-        dd($media);
-        $name = $media->hashName();
+        if($media === null || $media->getError()) {
+            return;
+        }
 
+        $name = $media->hashName();
+        
         $path = $media->storeAs('medias', $name);
 
-       /*  $file = Media::create([
-            'name' => "{$name}",
-            'file_name' => $media->getClientOriginalName(),
-            'mime_type' => $media->getClientMimeType(),
-            'path' => $path,
-            'disk' => config('uploads.disk'),
-            'file_hash' => hash_file(config('uploads.algo'), 'medias/' . $name),
-            'collection' => 'Posts',
-            'size' => $media->getSize(),
-        ]);
+        $file = new File(
+            name: "{$name}",
+            originalName: $media->getClientOriginalName(),
+            mime: $media->getClientMimeType(),
+            path: $path,
+            disk: config('uploads.disk'),
+            hash: hash(config('uploads.algo'),
+                storage_path(
+                    path: "app/medias/{$name}",
+                )),
+            collection: 'posts',
+            size: $media->getSize(),
+        );
+        $image = Media::create(attributes: $file->toArray());
+        
+        return $image;
 
-        dd($file); */
     }
 }

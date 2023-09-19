@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Post;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,7 +14,6 @@ return new class extends Migration
     {
         Schema::create('media', function (Blueprint $table) {
             $table->id();
-
             $table->string('name');
             $table->string('file_name');
             $table->string('mime_type');
@@ -22,7 +22,9 @@ return new class extends Migration
             $table->string('file_hash', 64)->unique();
             $table->string('collection')->nullable();
          
-            $table->unsignedBigInteger('size');
+            $table->unsignedBigInteger('size')->default(0);
+
+            $table->foreignIdFor(Post::class)->nullable()->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

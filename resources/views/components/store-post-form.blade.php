@@ -1,6 +1,6 @@
 @props(['categories'])
 
-<form action="{{ route('posts.store') }}" method="post" 
+<form action="{{ route('posts.store') }}" method="post" enctype="multipart/form-data"
     class="flex md:flex flex-col space-y-2" 
     x-data="{ collapse: false }"
 >
