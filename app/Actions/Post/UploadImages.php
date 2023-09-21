@@ -13,7 +13,7 @@ class UploadImages {
         $media = $request->file('media');
 
         if($media === null || $media->getError()) {
-            return;
+            return null;
         }
 
         $name = $media->hashName();

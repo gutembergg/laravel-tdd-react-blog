@@ -3,21 +3,34 @@
         class="bg-slate-800 h-screen p-5 left-0 transform
         overflow-y-auto transition duration-200 shadow-md">
         {{-- Logo --}}
-        <div class="flex justify-between items-center px-2 cursor-pointer">
-            <div class="flex items-center space-x-2">
-                <a href="">
-                    <x-admin-logo class="h-10 text-white" />
-                </a>
-                <span class="text-2xl text-white font-extrabold">Admin</span>
+        <div class="flex-col justify-between items-center px-2 cursor-pointer">
+            <div class="flex items-center justify-between w-full space-x-2">
+                <div class="flex items-center">
+                    <a href="">
+                        <x-admin-logo class="h-10 text-white" />
+                    </a>
+                    <span class="text-2xl text-white ml-2 font-extrabold">Admin</span>
+                </div>
+
+                <button @click="open = false" class="bg-slate-400 text-white hover:bg-slate-500 border-solid
+                    border-slate-500 border-2 
+                    rounded-md p-4 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    
+                </button>
             </div>
-            <button @click="open = false" class="bg-slate-400 text-white hover:bg-slate-500 border-solid
-                border-slate-500 border-2 
-                rounded-md p-4 focus:outline-none">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-                
-            </button>
+
+            <ul class="mt-16 space-y-4 dark:text-white text-black font-semibold text-[25px]">
+                <li class=""><a href="{{ route('dashboard') }}">Posts</a></li>
+                <li>
+                    <a href="{{ route('categories.index') }}">Categories</a>
+                </li>
+                <li><a href="{{ route('dashboard') }}">Profile</a></li>
+            </ul>
+
+           
         </div>
     </aside>
 

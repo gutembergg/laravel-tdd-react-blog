@@ -25,13 +25,40 @@ class Post extends Model
         'comment_status' => 'boolean',
     ];
 
+
+  /*   public static function boot()
+    {
+        parent::boot();
+ 
+        static::creating(function($model) {
+            $model->slug = Str::slug($model->title);// change the ToBeSluggiefied
+
+ 
+            $latestSlug =
+                static::whereRaw("slug = '$model->slug' or slug LIKE '$model->slug-%'")
+                    ->latest('id')
+                    ->value('slug');
+
+                    dd( $latestSlug );
+            if ($latestSlug) {
+                $pieces = explode('-', $latestSlug);
+ 
+                $number = intval(end($pieces));
+ 
+                $model->slug .= '-' . ($number + 1);
+
+            }
+        });
+    }
+ */
     public function slug(): Attribute
     {
         return Attribute::make(
             get: fn (string $value) => $value,
             set: fn (string $value) => Str::slug(strtolower($value)),
         );
-    }
+    } 
+
 
     public static function link(): Attribute
     {

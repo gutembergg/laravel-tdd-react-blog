@@ -10,6 +10,8 @@ use App\Models\User;
 use Database\Seeders\CategoriesSeeder;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
@@ -112,6 +114,8 @@ class PostsTest extends TestCase
 
     public function test_posts_with_author_store_route(): void
     {
+        Storage::fake();
+
         $this->seed(RoleSeeder::class);
         $this->seed(CategoriesSeeder::class);
 
@@ -133,12 +137,17 @@ class PostsTest extends TestCase
 
         $categories = [...Category::all()->pluck('id')->random(2)];
 
-        $response = $this->actingAs($user)->postJson(route('posts.store', [
+        $file = UploadedFile::fake()->image('photo1.jpg');
+
+        $response = $this->actingAs($user)->withHeaders([
+            'Content-Type' => 'multipart/form-data',
+        ])->post(route('posts.store', [
             'title' => $post->title,
             'content' => $post->content,
             'slug' => $slug,
             'link' => $link,
-            'categories' => $categories
+            'categories' => $categories,
+            /* 'media' => $file */
         ]));
 
         $this->assertDatabaseCount('category_post', 2);
