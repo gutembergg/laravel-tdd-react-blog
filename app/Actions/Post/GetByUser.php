@@ -19,7 +19,7 @@ class GetByUser {
 
         $posts = Post::whereHas('author', function (Builder $query) use($user) {
             $query->where('user_id', $user->id);
-        })->get();
+        })->with('medias')->get();
 
         return $posts;
 

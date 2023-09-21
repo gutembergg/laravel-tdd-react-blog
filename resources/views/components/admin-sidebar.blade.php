@@ -1,6 +1,6 @@
 <div class="flex" x-data="{ open: true }">
     <aside :class="{'-translate-x-full': !open, 'w-72': open, 'w-20': !open}" 
-        class="bg-slate-800 h-screen p-5 left-0 transform
+        class="bg-slate-800  p-5 leinset-y-0 ft-0 transform
         overflow-y-auto transition duration-200 shadow-md">
         {{-- Logo --}}
         <div class="flex-col justify-between items-center px-2 cursor-pointer">
@@ -12,9 +12,9 @@
                     <span class="text-2xl text-white ml-2 font-extrabold">Admin</span>
                 </div>
 
-                <button @click="open = false" class="bg-slate-400 text-white hover:bg-slate-500 border-solid
-                    border-slate-500 border-2 
-                    rounded-md p-4 focus:outline-none">
+                <button @click="open = false" class="bg-slate-700 text-white
+                     hover:bg-slate-600 border-solid rounded-md p-3 focus:outline-none"
+                >
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>

@@ -25,9 +25,8 @@ class PostFactory extends Factory
         return [
             'title' => $title,
             'content' => fake()->text(),
-            'link' => route('posts.show', ['slug' => $slug]),
+            'link' => $slug,
             'status' => PostStatusEnum::PUBLISH->value,
-            'slug' => $slug,
             'comment_status' => false,
             'author_id' => Author::factory(),
         ];

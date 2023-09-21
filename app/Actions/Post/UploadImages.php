@@ -18,7 +18,7 @@ class UploadImages {
 
         $name = $media->hashName();
         
-        $path = $media->storeAs('medias', $name);
+        $path = $media->store('medias', 'public');
 
         $file = new File(
             name: "{$name}",

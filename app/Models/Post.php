@@ -9,10 +9,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory, HasSlug;
 
     protected $fillable = [
         'title',
@@ -25,40 +27,34 @@ class Post extends Model
         'comment_status' => 'boolean',
     ];
 
-
-  /*   public static function boot()
+     /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions() : SlugOptions
     {
-        parent::boot();
- 
-        static::creating(function($model) {
-            $model->slug = Str::slug($model->title);// change the ToBeSluggiefied
-
- 
-            $latestSlug =
-                static::whereRaw("slug = '$model->slug' or slug LIKE '$model->slug-%'")
-                    ->latest('id')
-                    ->value('slug');
-
-                    dd( $latestSlug );
-            if ($latestSlug) {
-                $pieces = explode('-', $latestSlug);
- 
-                $number = intval(end($pieces));
- 
-                $model->slug .= '-' . ($number + 1);
-
-            }
-        });
+        return SlugOptions::create()
+            ->generateSlugsFrom('title')
+            ->saveSlugsTo('slug');
     }
- */
-    public function slug(): Attribute
+
+      /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+/*     public function slug(): Attribute
     {
         return Attribute::make(
             get: fn (string $value) => $value,
             set: fn (string $value) => Str::slug(strtolower($value)),
         );
     } 
-
+ */
 
     public static function link(): Attribute
     {

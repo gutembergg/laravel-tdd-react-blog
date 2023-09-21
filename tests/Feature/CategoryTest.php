@@ -27,20 +27,16 @@ class CategoryTest extends TestCase
             fake()->randomElement([RoleEnum::SUPER_ADMIN->value, RoleEnum::EDITOR->value])
         );
 
-        $response = $this->actingAs($user)->getJson(route('categories.index'));
+        $categories = Category::all();
 
-        $category = Category::first();
+        $response = $this->actingAs($user)->get(route('categories.index'));
 
-        $response->assertJson(fn (AssertableJson $json) => $json
-            ->hasAll(['0.id', '0.name'])->etc()
-            ->whereAll([
-                '0.name' =>  $category->name
-            ])
-            ->whereAllType([
-                '0.name' => 'string'
-            ])
-        );
+        $view = $this->view('admin.categories', ['categories' => $categories]);
 
         $response->assertOk();
+
+        $view->assertSee($categories[0]->name);
+        $view->assertSee($categories[1]->name);
+        $view->assertSee($categories[2]->name);
     }
 }
