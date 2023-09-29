@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class GetByUser {
 
-    public function handle(): Collection | Responsable
+    public function handle(string $direction, int $sizeList): Collection | Responsable
     {
         $user = auth()->user();
 
@@ -18,8 +18,8 @@ class GetByUser {
         }
 
         $posts = Post::whereHas('author', function (Builder $query) use($user) {
-            $query->where('user_id', $user->id);
-        })->with('medias')->get();
+            return $query->where('user_id', $user->id);
+        })->with('medias', 'categories')->lastPosts($direction, $sizeList);
 
         return $posts;
 

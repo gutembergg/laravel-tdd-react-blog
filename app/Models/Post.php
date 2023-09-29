@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\QueryBuilders\Post\AdminLastPostsBuilder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -27,6 +28,12 @@ class Post extends Model
         'comment_status' => 'boolean',
     ];
 
+
+    public function newEloquentBuilder($query): AdminLastPostsBuilder
+    {
+        return new AdminLastPostsBuilder($query);
+    }
+
      /**
      * Get the options for generating the slug.
      */
@@ -47,14 +54,6 @@ class Post extends Model
         return 'slug';
     }
 
-/*     public function slug(): Attribute
-    {
-        return Attribute::make(
-            get: fn (string $value) => $value,
-            set: fn (string $value) => Str::slug(strtolower($value)),
-        );
-    } 
- */
 
     public static function link(): Attribute
     {

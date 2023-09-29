@@ -16,7 +16,7 @@ class DashboardController extends Controller
     public function __invoke(Request $request): View
     {
         $categories = Category::all();
-        $posts = (new GetByUser())->handle();
+        $posts = (new GetByUser())->handle('desc', 4);
 
         return view('admin.index', ['categories' => $categories, 'posts' => $posts]);
     }

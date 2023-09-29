@@ -7,7 +7,7 @@
             <div class="flex items-center justify-between w-full space-x-2">
                 <div class="flex items-center">
                     <a href="">
-                        <x-admin-logo class="h-10 text-white" />
+                        <x-admin.logo class="h-10 text-white" />
                     </a>
                     <span class="text-2xl text-white ml-2 font-extrabold">Admin</span>
                 </div>
@@ -22,21 +22,15 @@
                 </button>
             </div>
 
-            <ul class="mt-16 space-y-4 dark:text-white text-black font-semibold text-[25px]">
-                <li class=""><a href="{{ route('dashboard') }}">Posts</a></li>
-                <li>
-                    <a href="{{ route('categories.index') }}">Categories</a>
-                </li>
-                <li><a href="{{ route('dashboard') }}">Profile</a></li>
-            </ul>
-
+        <x-admin.sidebar-links />
            
         </div>
     </aside>
 
     <div :class="{'hidden': open}" class="flex-grow-0">
-        <x-admin-sidebar-btn 
-            class="h-10 absolute mt-6 left-4 fill-current text-gray-800 dark:text-gray-200 cursor-pointer"
+        <x-admin.sidebar-btn 
+            class="h-10 absolute mt-6 left-4 fill-current text-gray-800 dark:text-gray-200 
+                   cursor-pointer"
             @click="open = true"
         />
     </div>

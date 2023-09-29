@@ -20,7 +20,7 @@
             @include('layouts.navigation') 
 
            <div class="flex">
-                <x-admin-sidebar /> 
+                <x-admin.sidebar /> 
 
                 <!-- Page Content -->
                 <main>
@@ -32,13 +32,6 @@
     </body>
     <script>
     
-        new TomSelect("select[multiple]", {
-            plugins: {
-                remove_button:{
-                    title:'Remove this item',
-                }
-            },
-        });
-    
+   
     </script>
 </html>
