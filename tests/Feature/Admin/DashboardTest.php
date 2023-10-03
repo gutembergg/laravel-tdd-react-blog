@@ -31,7 +31,6 @@ class DashboardTest extends TestCase
             ->assignRole(fake()
                     ->randomElement([RoleEnum::SUPER_ADMIN->value, RoleEnum::EDITOR->value]));
 
-        $authentinadedUser = $this->actingAs($user);
         $categories = Category::all();
 
         $author = Author::factory()
@@ -49,23 +48,23 @@ class DashboardTest extends TestCase
             'posts' => $posts,
         ]));
 
+        $response->assertStatus(200);
+
         $lastPosts = $response['posts'];
 
-        $view = $this->blade(
+        $component = $this->blade(
             '<x-admin.store-post-form :categories="$categories" />',
             ['categories' => $categories]
         );
-        $view->assertSee($categories->first()->name);
+        $component->assertSee($categories->first()->name);
 
-        $view = $this->blade(
+        $component = $this->blade(
             '<x-admin.last-posts :posts="$posts" />',
             ['posts' => $lastPosts]
         );
-        $view->assertSee($lastPosts->first()->title);
+        $component->assertSee($lastPosts->first()->title);
 
-       // $view = $this->view('admin.index', ['categories' => $categories, 'posts' => $lastPosts]);
-
-        $response->assertStatus(200);
+        //$view = $this->view('admin.index', ['categories' => $categories, 'posts' => $lastPosts]);
 
     }
 }

@@ -1,8 +1,42 @@
 @props(['posts'])
 
-<ul class="pt-8">
-    @foreach ($posts as $post)
-        
+<div>
+
+
+<table class="table-fixed w-full text-white mt-6 border-2 border-white">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Title</th>
+          <th scope="col">Created at</th>
+          <th scope="col">Updated at</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+          @foreach ($posts as $post)
+        <tr>
+            <td class="text-center">{{ $post->id }}</td>
+            <td class="text-center">{{ $post->title }}</td>
+            <td class="text-center">{{ $post->created_at }}</td>
+            <td class="text-center">{{ $post->updated_at }}</td>
+            <td class="text-center">
+              delete
+             {{--  <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST">
+                  @csrf
+                  @method('DELETE')
+                  <a href="{{ route('admin.posts.edit', $post->id) }}" class="btn btn-primary">Edit</a>
+                  <button type="submit" class="btn btn-danger">Delete</button>
+              </form> --}}
+
+           </td>
+           @endforeach
+        </tr>
+      </tbody>
+    </table>
+</div>
+  
+{{--         
         <li class="text-white font-bold">
             <div class="max-w-sm rounded overflow-hidden shadow-lg">
                 @if (count($post->medias) !== 0)
@@ -21,6 +55,4 @@
                 </div>
               </div>
         </li>
-
-    @endforeach
-</ul>
+ --}}
