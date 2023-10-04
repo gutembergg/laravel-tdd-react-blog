@@ -12,7 +12,7 @@ class ShowController extends Controller
     public function __invoke(Request $request): Post|JsonResponse
     {
         $postQuery = Post::query();
-        $post = $postQuery->where('slug', $request->slug)->with('author')->get()->first();
+        $post = $postQuery->where('slug', $request->slug)->with('author', 'categories')->get()->first();
 
         if (! $post) {
             return response()->json([

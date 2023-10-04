@@ -72,18 +72,22 @@ class PostsTest extends TestCase
 
     public function test_posts_show_route(): void
     {
+        $this->seed(CategoriesSeeder::class);
+
         $author = Author::factory()->state([
             'name' => 'AUTHOR_TEST_NAME',
         ]);
 
-        $post = Post::factory(1)->for($author)->createOne();
+        $categories = Category::all();
+
+        $post = Post::factory(1)->hasAttached($categories)->for($author)->createOne();
 
         $response = $this->getJson(route('posts.show', ['slug' => $post->slug]));
 
         $response->assertStatus(200);
 
         $response->assertJson(fn (AssertableJson $json) => $json
-            ->hasAll(['title', 'slug', 'content', 'link', 'comment_status', 'author_id'])->etc()
+            ->hasAll(['title', 'slug', 'content', 'link', 'comment_status', 'author_id', 'categories'])->etc()
             ->whereAllType([
                 'title' => 'string',
                 'slug' => 'string',
@@ -99,6 +103,7 @@ class PostsTest extends TestCase
                 'link' => $post->link,
                 'comment_status' => $post->comment_status,
                 'author_id' => $post->author_id,
+                'categories.0.name' => $categories[0]->name,
             ])
 
         );

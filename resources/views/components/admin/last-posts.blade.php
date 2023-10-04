@@ -1,38 +1,38 @@
 @props(['posts'])
 
-<div>
+<div {{ $attributes }}>
+  <table class=" max-w-[900px] w-full text-sm text-left text-gray-500 dark:text-gray-400 
+    border-collapse  border border-slate-500 rounded-md">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 
+          dark:text-gray-400">
+          <tr>
+            <th scope="col" class="px-4 py-2">ID</th>
+            <th scope="col" class="px-4 py-2">Title</th>
+            <th scope="col" class="px-4 py-2">Created at</th>
+            <th scope="col" class="px-4 py-2">Updated at</th>
+            <th scope="col" class="px-4 py-2">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+            @foreach ($posts as $post)
+          <tr class="hover:bg-slate-100 hover:text-black cursor-pointer">
+              <td class="px-4 py-2">{{ $post->id }}</td>
+              <td class="px-4 py-2">{{ $post->title }}</td>
+              <td class="px-4 py-2">{{ $post->created_at }}</td>
+              <td class="px-4 py-2">{{ $post->updated_at }}</td>
+              <td class="px-6">
+                delete
+              {{--  <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <a href="{{ route('admin.posts.edit', $post->id) }}" class="btn btn-primary">Edit</a>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form> --}}
 
-
-<table class="table-fixed w-full text-white mt-6 border-2 border-white">
-      <thead>
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Title</th>
-          <th scope="col">Created at</th>
-          <th scope="col">Updated at</th>
-          <th scope="col">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-          @foreach ($posts as $post)
-        <tr>
-            <td class="text-center">{{ $post->id }}</td>
-            <td class="text-center">{{ $post->title }}</td>
-            <td class="text-center">{{ $post->created_at }}</td>
-            <td class="text-center">{{ $post->updated_at }}</td>
-            <td class="text-center">
-              delete
-             {{--  <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST">
-                  @csrf
-                  @method('DELETE')
-                  <a href="{{ route('admin.posts.edit', $post->id) }}" class="btn btn-primary">Edit</a>
-                  <button type="submit" class="btn btn-danger">Delete</button>
-              </form> --}}
-
-           </td>
-           @endforeach
-        </tr>
-      </tbody>
+            </td>
+            @endforeach
+          </tr>
+        </tbody>
     </table>
 </div>
   

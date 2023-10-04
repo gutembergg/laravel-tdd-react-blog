@@ -19,7 +19,7 @@
         </svg>
       </button>
       <div id="hs-basic-collapse-heading" :class="{'hidden': !collapse}" 
-           class="hs-collapse overflow-hidden transition-[height] duration-300" 
+           class="hs-collapse overflow-hidden transform transition-[height] duration-300" 
            aria-labelledby="hs-basic-collapse"
       >
         <div class="mt-5">

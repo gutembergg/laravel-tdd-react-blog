@@ -23,7 +23,7 @@
                 <x-admin.sidebar /> 
 
                 <!-- Page Content -->
-                <main>
+                <main class="w-full">
                     @include('shared.flash')
                     @yield('content')
                 </main>
