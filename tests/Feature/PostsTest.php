@@ -21,13 +21,17 @@ class PostsTest extends TestCase
 
     public function test_posts_index_route(): void
     {
+        $this->seed(CategoriesSeeder::class);
+
         $expectedResponseSize = 8;
 
         $author = Author::factory()->state([
             'name' => 'AUTHOR_TEST_NAME',
         ]);
 
-        $posts = Post::factory(10)->for($author)->create();
+        $categories = Category::all();
+
+        $posts = Post::factory(10)->hasAttached($categories)->for($author)->create();
 
         $response = $this->getJson(route('posts.index'));
 
@@ -44,8 +48,16 @@ class PostsTest extends TestCase
                 '0.content' => $post->content,
                 '0.link' => $post->link,
                 '0.comment_status' => $post->comment_status,
+                '0.categories.0.name' => $categories[0]->name,
             ])
-                ->hasAll(['0.title', '0.slug', '0.content', '0.link', '0.comment_status', '0.author'])->etc()
+                ->hasAll(['0.title', 
+                    '0.slug', 
+                    '0.content', 
+                    '0.link', 
+                    '0.comment_status', 
+                    '0.author', 
+                    '0.categories'
+                ])->etc()
                 ->whereAllType([
                     '0.title' => 'string',
                     '0.slug' => 'string',
@@ -55,6 +67,7 @@ class PostsTest extends TestCase
                 ])
             )
         );
+
     }
 
     public function test_posts_show_route(): void
