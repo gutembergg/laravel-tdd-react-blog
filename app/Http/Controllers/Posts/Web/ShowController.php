@@ -22,6 +22,6 @@ class ShowController extends Controller
             return back();
         }
 
-        return view('admin.post-show', ['post' => $post]);
+        return view('admin.post-edit', ['post' => $post]);
     }
 }

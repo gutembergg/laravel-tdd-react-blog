@@ -14,24 +14,29 @@
           </tr>
         </thead>
         <tbody>
-            @foreach ($posts as $post)
+          @foreach ($posts as $post)
           <tr class="hover:bg-slate-100 hover:text-black cursor-pointer">
-              <td class="px-4 py-2">{{ $post->id }}</td>
-              <td class="px-4 py-2">{{ $post->title }}</td>
-              <td class="px-4 py-2">{{ $post->created_at }}</td>
-              <td class="px-4 py-2">{{ $post->updated_at }}</td>
-              <td class="px-6">
-                delete
-              {{--  <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <a href="{{ route('admin.posts.edit', $post->id) }}" class="btn btn-primary">Edit</a>
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form> --}}
+              
 
-            </td>
+                  <td class="px-4 py-2">
+                    <a href="{{ route('posts.web-show', $post->slug) }}" class="h-full block z-50">{{ $post->id }}</a></td>
+                  <td class="px-4 py-2"><a href="{{ route('posts.web-show', $post->slug) }}" class="h-full block z-50">{{ $post->title }}</a></td>
+                  <td class="px-4 py-2"><a href="{{ route('posts.web-show', $post->slug) }}" class="h-full block z-50">{{ $post->created_at }}</a></td>
+                  <td class="px-4 py-2"><a href="{{ route('posts.web-show', $post->slug) }}" class="h-full block z-50">{{ $post->updated_at }}</a></td>
+                  <td class="px-6">
+                    delete
+                  {{--  <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <a href="{{ route('admin.posts.edit', $post->id) }}" class="btn btn-primary">Edit</a>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form> --}}
+
+                </td>
+              </a>
+
+            </tr>
             @endforeach
-          </tr>
         </tbody>
     </table>
 </div>
