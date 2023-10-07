@@ -21,19 +21,19 @@ describe('HomePage', () => {
     test('LastPostsComponents should display last 8 posts', async () => {
         const { findAllByRole } = render(
             <BrowserRouter>
-                <LastPosts />
+                <LastPosts data={[{ id: 1, title: 'test', description: 'desc' }]} error={false} isLoading={false} />
             </BrowserRouter>
         );
 
         const listItems = await findAllByRole('listitem');
 
-        expect(listItems).toHaveLength(8);
+        expect(listItems).toHaveLength(1);
     });
 
     test('LastPostsComponents should display Loading... before api call resolve', async () => {
         const { findAllByRole, getByText } = render(
             <BrowserRouter>
-                <LastPosts />
+                <LastPosts data={[{ id: 1, title: 'test', description: 'desc' }]} error={false} isLoading={true} />
             </BrowserRouter>
         );
 
@@ -43,6 +43,6 @@ describe('HomePage', () => {
 
         const listItems = await findAllByRole('listitem');
 
-        expect(listItems).toHaveLength(8);
+        expect(listItems).toHaveLength(1);
     });
 });
