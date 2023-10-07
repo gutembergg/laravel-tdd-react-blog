@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { useState } from 'react';
+import axios, { AxiosResponse } from 'axios';
+import { useCallback, useEffect, useState } from 'react';
 
 type Options = {
     search?: string;
@@ -7,22 +7,31 @@ type Options = {
 };
 
 export const useApiRequests = <T = any>(path: string, options?: Options) => {
-    console.log(path, options);
-
-    const [data, setData] = useState<T[] | null | any>(null);
+    const [data, setData] = useState<T | null>(null);
     const [error, setError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         try {
-            const response = await axios.get<T[]>(path, {
+            setIsLoading(true);
+
+            const { data: response } = await axios.get(path, {
                 params: options,
             });
 
-            setData(response);
+            console.log('response', response.data);
+
+            setData(response.data);
         } catch (error) {
             setError(true);
+        } finally {
+            setIsLoading(false);
         }
-    };
+    }, [options, path]);
 
-    return { data, error, fetchData };
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    return { data, error, fetchData, isLoading };
 };

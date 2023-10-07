@@ -1,13 +1,10 @@
-import { useState } from 'react';
+import { RouterProvider } from 'react-router-dom';
+import { router } from './Routes';
 
 function App() {
-    const [state, setState] = useState('test');
-
     return (
         <div>
-            React js
-            <div>{state}</div>
-            <button onClick={() => setState('new Test')}>Test</button>
+            <RouterProvider router={router} />
         </div>
     );
 }
