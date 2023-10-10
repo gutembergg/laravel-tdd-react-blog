@@ -9,12 +9,10 @@ type Options = {
 export const useApiRequests = <T = any>(path: string, options?: Options) => {
     const [data, setData] = useState<T | null>(null);
     const [error, setError] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     const fetchData = useCallback(async () => {
         try {
-            setIsLoading(true);
-
             const { data: response } = await axios.get(path, {
                 params: options,
             });

@@ -1,16 +1,15 @@
 import { Post } from '../../Interfaces/Post';
-import { useApiRequests } from '../../hooks/apiRequest';
+import { useApiRequests } from '../../hooks/useApiRequest';
 
-interface Props {
-    data: Post[] | null;
-    error: boolean;
-    isLoading: boolean;
-}
+function LastPosts() {
+    const { data, error, isLoading } = useApiRequests<Post[]>('http://localhost/api/posts/');
 
-function LastPosts({ data, error, isLoading }: Props) {
+    if (isLoading) {
+        return <div className="loading">Loading...</div>;
+    }
+
     return (
         <div>
-            {isLoading && <div className="loading">Loading...</div>}
             {data && (
                 <ul>
                     {data.map((post) => (

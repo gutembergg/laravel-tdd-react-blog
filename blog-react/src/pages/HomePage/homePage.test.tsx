@@ -1,9 +1,21 @@
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
-import { describe, test, expect } from 'vitest';
-import HomePage from '.';
+import { describe, test, expect, vi } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
+import { faker } from '@faker-js/faker';
+import HomePage from '.';
 import LastPosts from '../../Components/Posts/LastPosts';
+import * as useApiRequest from '../../hooks/useApiRequest';
+
+const useApiRequestSpy = vi.spyOn(useApiRequest, 'useApiRequests');
+
+const renderedComponent = () => {
+    return render(
+        <BrowserRouter>
+            <LastPosts />
+        </BrowserRouter>
+    );
+};
 
 describe('HomePage', () => {
     test('HomePage header link exist', () => {
@@ -18,28 +30,32 @@ describe('HomePage', () => {
         expect(headerLink).toHaveLength(1);
     });
 
-    test('LastPostsComponents should display last 8 posts', async () => {
-        const { findAllByRole } = render(
-            <BrowserRouter>
-                <LastPosts data={[{ id: 1, title: 'test', description: 'desc' }]} error={false} isLoading={false} />
-            </BrowserRouter>
-        );
+    test('LastPostsComponents should display loading...', () => {
+        const dataSpy = {
+            data: [{ id: 1, title: 'test-title', description: faker.lorem }],
+            error: false,
+            fetchData: vi.fn(),
+            isLoading: true,
+        };
 
-        const listItems = await findAllByRole('listitem');
+        useApiRequestSpy.mockReturnValue(dataSpy);
 
-        expect(listItems).toHaveLength(1);
+        const { queryByText } = renderedComponent();
+
+        expect(queryByText('Loading...')).toBeInTheDocument();
     });
 
-    test('LastPostsComponents should display Loading... before api call resolve', async () => {
-        const { findAllByRole, getByText } = render(
-            <BrowserRouter>
-                <LastPosts data={[{ id: 1, title: 'test', description: 'desc' }]} error={false} isLoading={true} />
-            </BrowserRouter>
-        );
+    test('LastPostsComponents should display posts', async () => {
+        const dataSpy = {
+            data: [{ id: 1, title: 'test-title', description: faker.lorem }],
+            error: false,
+            fetchData: vi.fn(),
+            isLoading: false,
+        };
 
-        const loading = getByText(/Loading.../i);
+        useApiRequestSpy.mockReturnValue(dataSpy);
 
-        expect(loading).toBeInTheDocument();
+        const { findAllByRole } = renderedComponent();
 
         const listItems = await findAllByRole('listitem');
 
