@@ -1,21 +1,33 @@
-import { Link } from 'react-router-dom';
-import LastPosts from '../../Components/Posts/LastPosts';
+import ImageBunner from '../../Components/HomePage/ImageBunner';
+import PostsList from '../../Components/Posts/PostsList';
+import { useApiRequests } from '../../hooks/useApiRequest';
+import { Post } from '../../Interfaces/Post';
+import DefaultLayout from '../../layouts/DefaultLayout';
+
+import './styles.css';
 
 function HomePage() {
+    const { data, error, isLoading } = useApiRequests<Post[]>('http://localhost/api/posts/');
+
     return (
-        <div>
-            <header>
+        <DefaultLayout>
+            <div className="flex flex-col  bg-slate-950">
+                <ImageBunner />
                 <div>
-                    <Link to={`posts`}>Parcourir tout les articles</Link>
+                    <h1
+                        id="post-list_title"
+                        className="text-4xl text-yellow-600 text-center 
+                        font-semibold py-12"
+                    >
+                        Derniers articles
+                    </h1>
+
+                    <PostsList data={data} error={error} isLoading={isLoading} />
                 </div>
-            </header>
 
-            <div className="main">
-                <LastPosts />
+                <footer>Footer</footer>
             </div>
-
-            <footer>Footer</footer>
-        </div>
+        </DefaultLayout>
     );
 }
 

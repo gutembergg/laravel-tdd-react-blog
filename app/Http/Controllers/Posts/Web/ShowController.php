@@ -13,12 +13,12 @@ class ShowController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request): View | RedirectResponse
+    public function __invoke(Request $request): View|RedirectResponse
     {
         $query = Post::query();
         $post = $query->where('slug', $request->slug)->with('categories')->first();
 
-        if(!$post) {
+        if (! $post) {
             return back();
         }
 

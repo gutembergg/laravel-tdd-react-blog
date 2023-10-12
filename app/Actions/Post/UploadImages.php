@@ -6,18 +6,18 @@ use App\DTOS\File;
 use App\Http\Requests\Post\PostStoreRequest;
 use App\Models\Media;
 
-class UploadImages {
-
-    public function handle(PostStoreRequest $request)
+class UploadImages
+{
+    public function handle(PostStoreRequest $request): Media | null
     {
         $media = $request->file('media');
 
-        if($media === null || $media->getError()) {
+        if ($media === null || $media->getError()) {
             return null;
         }
 
         $name = $media->hashName();
-        
+
         $path = $media->store('medias', 'public');
 
         $file = new File(
@@ -34,7 +34,7 @@ class UploadImages {
             size: $media->getSize(),
         );
         $image = Media::create(attributes: $file->toArray());
-        
+
         return $image;
 
     }

@@ -15,8 +15,8 @@ use Tests\TestCase;
 
 class DashboardTest extends TestCase
 {
-
     use RefreshDatabase, WithFaker;
+
     /**
      * A basic feature test example.
      */
@@ -25,24 +25,24 @@ class DashboardTest extends TestCase
 
         $this->seed(RoleSeeder::class);
         $this->seed(CategoriesSeeder::class);
-        
+
         $user = User::factory()
             ->create()
             ->assignRole(fake()
-                    ->randomElement([RoleEnum::SUPER_ADMIN->value, RoleEnum::EDITOR->value]));
+                ->randomElement([RoleEnum::SUPER_ADMIN->value, RoleEnum::EDITOR->value]));
 
         $categories = Category::all();
 
         $author = Author::factory()
             ->has(Post::factory(5)
-            ->hasAttached($categories->random(2)))
+                ->hasAttached($categories->random(2)))
             ->create([
                 'name' => $user->name,
                 'user_id' => $user->id,
             ]);
 
         $posts = $author['posts'];
-        
+
         $response = $this->actingAs($user)->get(route('dashboard', [
             'category' => $categories,
             'posts' => $posts,

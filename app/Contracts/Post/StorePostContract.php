@@ -5,8 +5,7 @@ namespace App\Contracts\Post;
 use App\Http\Requests\Post\PostStoreRequest;
 use App\Models\Post;
 
-interface StorePostContract {
-
+interface StorePostContract
+{
     public function exec(PostStoreRequest $request): Post;
-    
 }

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('disk')->default('local');
             $table->string('file_hash', 64)->unique();
             $table->string('collection')->nullable();
-         
+
             $table->unsignedBigInteger('size')->default(0);
 
             $table->foreignIdFor(Post::class)->nullable()->constrained()->onDelete('cascade');

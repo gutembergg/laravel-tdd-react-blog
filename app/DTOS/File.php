@@ -2,8 +2,8 @@
 
 namespace App\DTOS;
 
-class File {
-
+class File
+{
     public function __construct(
         public readonly string $name,
         public readonly string $originalName,
@@ -11,11 +11,17 @@ class File {
         public readonly string $path,
         public readonly string $disk,
         public readonly string $hash,
-        public readonly null|string $collection = null,
-        public readonly string $size,
+        public readonly ?string $collection,
+        public readonly ?int $size,
 
-    ) {}
+    ) {
+    }
 
+    /**
+     * Undocumented function
+     *
+     * @return array<string, int|string|null>
+     */
     public function toArray(): array
     {
         return [

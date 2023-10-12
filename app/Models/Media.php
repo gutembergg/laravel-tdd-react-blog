@@ -18,9 +18,8 @@ class Media extends Model
         'disk',
         'file_hash',
         'collection',
-        'size'
+        'size',
     ];
-
 
     public function post(): BelongsTo
     {

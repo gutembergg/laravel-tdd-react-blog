@@ -8,18 +8,18 @@ use App\Contracts\Post\StorePostContract;
 use App\Http\Requests\Post\PostStoreRequest;
 use App\Models\Post;
 
-class StoreService implements StorePostContract {
-
+class StoreService implements StorePostContract
+{
     public function exec(PostStoreRequest $request): Post
     {
         $post = (new RegisterPost())->handle($request);
         $image = (new UploadImages())->handle($request);
-        
-        if($image) {
+
+        if ($image) {
             $image->post()->associate($post);
             $image->save();
         }
-        
+
         return $post;
 
     }

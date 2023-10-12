@@ -1,5 +1,11 @@
+import DefaultLayout from '../../layouts/DefaultLayout';
+
 function AllPosts() {
-    return <div>All posts</div>;
+    return (
+        <DefaultLayout>
+            <div>All Posts</div>
+        </DefaultLayout>
+    );
 }
 
 export default AllPosts;

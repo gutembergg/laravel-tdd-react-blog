@@ -35,12 +35,12 @@ class DatabaseSeeder extends Seeder
             )
             ->each(fn (User $user) => Author::factory()
                 ->has(Post::factory()
-                ->count(5)
-                ->hasAttached($categories->random(2)))
+                    ->count(5)
+                    ->hasAttached($categories->random(2)))
                 ->create([
                     'name' => $user->name,
                     'user_id' => $user->id,
-            ])
+                ])
             );
 
         /**
@@ -57,7 +57,7 @@ class DatabaseSeeder extends Seeder
             ->create([
                 'name' => $superAdmin->name,
                 'user_id' => $superAdmin->id,
-        ]);
+            ]);
 
     }
 }

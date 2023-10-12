@@ -28,23 +28,22 @@ class Post extends Model
         'comment_status' => 'boolean',
     ];
 
-
     public function newEloquentBuilder($query): AdminLastPostsBuilder
     {
         return new AdminLastPostsBuilder($query);
     }
 
-     /**
+    /**
      * Get the options for generating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom('title')
             ->saveSlugsTo('slug');
     }
 
-      /**
+    /**
      * Get the route key for the model.
      *
      * @return string
@@ -53,7 +52,6 @@ class Post extends Model
     {
         return 'slug';
     }
-
 
     public static function link(): Attribute
     {

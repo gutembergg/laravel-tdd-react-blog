@@ -8,7 +8,6 @@ use App\Models\User;
 use Database\Seeders\CategoriesSeeder;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class CategoryTest extends TestCase

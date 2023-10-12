@@ -2,5 +2,5 @@
 
 return [
     'algo' => 'md5',
-    'disk' => 'local'
+    'disk' => 'local',
 ];

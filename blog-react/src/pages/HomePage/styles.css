@@ -1,0 +1,10 @@
+#post-list_title {
+    transform: translateY(200px);
+    animation: posts_list_title 0.3s ease 1s forwards;
+}
+
+@keyframes posts_list_title {
+    to {
+        transform: translateY(0px);
+    }
+}

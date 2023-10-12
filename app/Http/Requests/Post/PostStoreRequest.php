@@ -28,8 +28,8 @@ class PostStoreRequest extends FormRequest
             'categories' => ['array', 'exists:categories,id'],
             'media' => [
                 File::types(['jpg', 'png', 'jpeg'])
-                    ->max(5 * 1024)
-            ]
+                    ->max(5 * 1024),
+            ],
         ];
     }
 }

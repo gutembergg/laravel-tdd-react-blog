@@ -50,13 +50,13 @@ class PostsTest extends TestCase
                 '0.comment_status' => $post->comment_status,
                 '0.categories.0.name' => $categories[0]->name,
             ])
-                ->hasAll(['0.title', 
-                    '0.slug', 
-                    '0.content', 
-                    '0.link', 
-                    '0.comment_status', 
-                    '0.author', 
-                    '0.categories'
+                ->hasAll(['0.title',
+                    '0.slug',
+                    '0.content',
+                    '0.link',
+                    '0.comment_status',
+                    '0.author',
+                    '0.categories',
                 ])->etc()
                 ->whereAllType([
                     '0.title' => 'string',
@@ -132,7 +132,7 @@ class PostsTest extends TestCase
 
     public function test_posts_with_author_store_route(): void
     {
-        Storage::fake();
+        Storage::fake('local');
 
         $this->seed(RoleSeeder::class);
         $this->seed(CategoriesSeeder::class);
@@ -165,8 +165,12 @@ class PostsTest extends TestCase
             'slug' => $slug,
             'link' => $link,
             'categories' => $categories,
-            /* 'media' => $file */
-        ]));
+        ],
+
+        ['media' => $file]
+
+    ));
+
 
         $this->assertDatabaseCount('category_post', 2);
 
@@ -206,7 +210,7 @@ class PostsTest extends TestCase
             'content' => $post->content,
             'slug' => $slug,
             'link' => $link,
-            'categories' => $categories
+            'categories' => $categories,
         ]));
 
         $this->assertDatabaseCount('category_post', 2);

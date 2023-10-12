@@ -6,8 +6,8 @@ use App\Http\Requests\Post\PostStoreRequest;
 use App\Models\Author;
 use App\Models\Post;
 
-class RegisterPost {
-
+class RegisterPost
+{
     public function handle(PostStoreRequest $request): Post
     {
         $post = new Post();
