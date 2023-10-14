@@ -3,10 +3,16 @@ type Category = {
     name: string;
 };
 
+export type Media = {
+    id: number;
+    name: string;
+    path: string;
+};
+
 export interface Post {
     id: number;
     title: string;
     content: string;
     categories?: Category[];
-    medias?: string[];
+    medias?: Media[];
 }

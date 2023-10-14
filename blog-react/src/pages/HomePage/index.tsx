@@ -1,5 +1,5 @@
 import ImageBunner from '../../Components/HomePage/ImageBunner';
-import PostsList from '../../Components/Posts/PostsList';
+import PostsList from '../../Components/Posts/PostsList/PostsList';
 import { useApiRequests } from '../../hooks/useApiRequest';
 import { Post } from '../../Interfaces/Post';
 import DefaultLayout from '../../layouts/DefaultLayout';

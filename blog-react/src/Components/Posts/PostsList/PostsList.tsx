@@ -1,4 +1,5 @@
-import { Post } from '../../Interfaces/Post';
+import { Post } from '../../../Interfaces/Post';
+import PlaceHolderImage from '../../../assets/placeholder-image.png';
 
 interface Props {
     data: Post[] | null;
@@ -7,13 +8,20 @@ interface Props {
 }
 
 function PostsList({ data, error, isLoading }: Props) {
-    console.log('data', data);
     if (isLoading) {
         return <div data-testid="loading">Loading...</div>;
     }
 
     if (error) {
         return <div data-testid="error">Error...</div>;
+    }
+
+    function checkHasImage(post: Post) {
+        if (post.medias && post.medias.length > 0) {
+            return post.medias[0].path;
+        }
+
+        return PlaceHolderImage;
     }
 
     return (
@@ -24,8 +32,9 @@ function PostsList({ data, error, isLoading }: Props) {
                         <li key={post.id}>
                             <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                                 <a href="#">
-                                    <img className="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
+                                    <img className="w-full min-h-[300px] rounded-t-lg object-cover" src={checkHasImage(post)} alt={post.title} />
                                 </a>
+
                                 <div className="p-5">
                                     <a href="#">
                                         <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{post.title}</h5>

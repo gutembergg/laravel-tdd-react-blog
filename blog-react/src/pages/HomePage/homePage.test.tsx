@@ -9,7 +9,7 @@ import * as useApiRequest from '../../hooks/useApiRequest';
 const useApiRequestSpy = vi.spyOn(useApiRequest, 'useApiRequests');
 
 const dataSpy = {
-    data: [{ id: 1, title: 'test-title', description: faker.lorem }],
+    data: [{ id: 1, title: 'test-title', description: faker.lorem, medias: [] }],
     error: false,
     fetchData: vi.fn(),
     isLoading: true,

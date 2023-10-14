@@ -10,16 +10,13 @@ use App\Models\User;
 use Database\Seeders\CategoriesSeeder;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class PostTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * A basic feature test example.
-     */
+  
     public function test_admin_show_post(): void
     {
         $this->seed(RoleSeeder::class);
@@ -40,21 +37,13 @@ class PostTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('posts.web-show', ['slug' => $post->slug]));
 
+        $response->assertSee($post->title);
+        $response->assertSee($post->slug);
+        $response->assertSee($post->content);
+       // $response->assertSee($post->link, $escaped = true);
+        $response->assertSee($post->comment_status);
+        $response->assertSee($categories[0]->name);
 
-       /*  $response->dump();
-        $response->assertJson(fn (AssertableJson $json) => $json
-            ->hasAll(['title', 'content', 'link', 'comment_status', 'author_id', 'categories'])->etc()
-            ->whereAll([
-                'title' => $post->title,
-                'slug' => $post->slug,
-                'content' => $post->content,
-                'link' => $post->link,
-                'comment_status' => $post->comment_status,
-                'author_id' => $post->author_id,
-                'categories.0.name' => $categories[0]->name,
-            ])
-
-        ); */
         $response->assertOk();
     }
 }

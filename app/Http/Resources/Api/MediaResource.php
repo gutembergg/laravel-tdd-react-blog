@@ -16,8 +16,8 @@ class MediaResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => 'localhost/storage/medias/' . $this->name,
-            'path' => $this->path,
+            'name' => $this->name,
+            'path' => asset('storage/' . $this->path),
         ];
     }
 }

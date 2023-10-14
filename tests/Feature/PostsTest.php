@@ -169,8 +169,10 @@ class PostsTest extends TestCase
 
         ['media' => $file]
 
-    ));
+        ));
 
+
+       // Storage::disk('local')->assertExists($file->hashName());
 
         $this->assertDatabaseCount('category_post', 2);
 
