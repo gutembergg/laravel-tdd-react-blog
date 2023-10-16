@@ -27,9 +27,9 @@ describe('<PostsList>', () => {
 
         const img: any = getByRole('img');
 
-        const imgPlaceholderName = img.src.split('assets');
+        const imgPlaceholderName = img.src.split('/').pop();
 
-        expect(imgPlaceholderName[1]).toEqual('/placeholder-image.png');
+        expect(imgPlaceholderName).toEqual('placeholder-image.png');
     });
 
     test('should display image from api', () => {
@@ -55,8 +55,8 @@ describe('<PostsList>', () => {
 
         const img: any = getByRole('img');
 
-        const imgPlaceholderName = img.src.split('assets');
+        const imgPlaceholderName = img.src.split('/').pop();
 
-        expect(imgPlaceholderName[1]).toEqual('/api-image.png');
+        expect(imgPlaceholderName).toEqual('api-image.png');
     });
 });

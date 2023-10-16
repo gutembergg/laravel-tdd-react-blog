@@ -1,0 +1,15 @@
+.posts_list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.posts-list_animate {
+    transform: translateX(-110%);
+    animation: List 0.5s ease forwards;
+}
+
+@keyframes List {
+    to {
+        transform: translateX(0);
+    }
+}

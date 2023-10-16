@@ -2,14 +2,14 @@ import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 import { describe, test, expect, vi } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
-import { faker } from '@faker-js/faker';
 import HomePage from '.';
 import * as useApiRequest from '../../hooks/useApiRequest';
+import { DataSpy } from '../../Tests/interfaces/PostsData';
 
 const useApiRequestSpy = vi.spyOn(useApiRequest, 'useApiRequests');
 
-const dataSpy = {
-    data: [{ id: 1, title: 'test-title', description: faker.lorem, medias: [] }],
+const dataSpy: DataSpy = {
+    data: [{ id: 1, title: 'test-title', content: 'test content', medias: [] }],
     error: false,
     fetchData: vi.fn(),
     isLoading: true,

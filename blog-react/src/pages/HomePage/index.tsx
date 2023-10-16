@@ -13,7 +13,7 @@ function HomePage() {
         <DefaultLayout>
             <div className="flex flex-col  bg-slate-950">
                 <ImageBunner />
-                <div>
+                <div className="content w-[90%] mx-auto">
                     <h1
                         id="post-list_title"
                         className="text-4xl text-yellow-600 text-center 
@@ -22,7 +22,9 @@ function HomePage() {
                         Derniers articles
                     </h1>
 
-                    <PostsList data={data} error={error} isLoading={isLoading} />
+                    <div>
+                        <PostsList className="posts-list_animate" data={data} error={error} isLoading={isLoading} />
+                    </div>
                 </div>
 
                 <footer>Footer</footer>
