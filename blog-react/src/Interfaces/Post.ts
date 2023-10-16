@@ -13,6 +13,7 @@ export interface Post {
     id: number;
     title: string;
     content: string;
+    slug: string;
     categories?: Category[];
     medias?: Media[];
 }

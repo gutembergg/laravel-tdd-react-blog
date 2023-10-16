@@ -11,11 +11,11 @@ function Header() {
                 >
                     <div className="mr-12">Logo</div>
                     <div className="flex gap-4">
-                        <Link to={`posts`} className="hover:text-white">
+                        <Link to="/posts" className="hover:text-white">
                             Tout les articles
                         </Link>
 
-                        <Link to={`posts`} className="hover:text-white">
+                        <Link to="/" className="hover:text-white">
                             Contact
                         </Link>
                     </div>
