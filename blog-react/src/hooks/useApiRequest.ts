@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 
 type Options = {
@@ -16,8 +16,6 @@ export const useApiRequests = <T = any>(path: string, options?: Options) => {
             const { data: response } = await axios.get(path, {
                 params: options,
             });
-
-            console.log('response', response.data);
 
             setData(response.data);
         } catch (error) {

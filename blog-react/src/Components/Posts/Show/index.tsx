@@ -1,9 +1,7 @@
-function PostShow() {
-    return (
-        <div>
-            <div>Show</div>
-        </div>
-    );
-}
+import ShowImage from './ShowImage';
+import ShowRoot from './ShowRoot';
 
-export default PostShow;
+export const Show = {
+    Root: ShowRoot,
+    Image: ShowImage,
+};

@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import HomePage from '../pages/HomePage';
 import AllPosts from '../pages/AllPosts';
-import PostShow from '../Components/Posts/Show';
+import ShowPost from '../pages/ShowPost';
 
 export const router = createBrowserRouter([
     {
@@ -14,7 +14,7 @@ export const router = createBrowserRouter([
     },
     {
         path: '/post/:slug',
-        element: <PostShow />,
+        element: <ShowPost />,
     },
 ]);
 
