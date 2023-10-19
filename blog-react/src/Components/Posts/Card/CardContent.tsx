@@ -1,7 +1,7 @@
-import { Post } from '../../../Interfaces/Post';
+import { PostView } from '../../../Interfaces/Post';
 
 interface CardContentProps {
-    post: Post;
+    post: PostView;
 }
 
 function CardContent({ post }: CardContentProps) {

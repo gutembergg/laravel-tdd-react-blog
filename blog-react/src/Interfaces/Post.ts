@@ -14,6 +14,17 @@ export interface Post {
     title: string;
     content: string;
     slug: string;
+    author: string;
     categories?: Category[];
-    medias?: Media[];
+    medias: Media[];
+}
+
+export interface PostView {
+    id: number;
+    title: string;
+    content: string;
+    slug: string;
+    author: string;
+    categories?: Category[];
+    mediaPath: string;
 }

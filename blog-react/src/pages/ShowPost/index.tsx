@@ -9,16 +9,17 @@ function ShowPost() {
 
     const { data } = useApiRequests<Post>(`http://localhost/api/posts/show/${slug}`);
 
-    console.log('Data', data ? data.medias : null);
-
     return (
         <DefaultLayout>
-            {/*   <div className="flex flex-col justify-center items-center py-12">
-                <img src={data?.medias ? data.medias[0].path : ''} alt="" />
-            </div> */}
-            <Show.Root>
+            {data && (
+                <div className="flex flex-col justify-center items-center py-12">
+                    {/*                     <img src={data.medias.length > 0 ? data.medias[0].path : ''} alt="" /> */}
+                </div>
+            )}
+
+            {/*   <Show.Root>
                 <Show.Image path={data?.medias ? data.medias[0].path : ''} />
-            </Show.Root>
+            </Show.Root> */}
         </DefaultLayout>
     );
 }

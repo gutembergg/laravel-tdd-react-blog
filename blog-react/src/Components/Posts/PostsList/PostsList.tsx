@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 import { HTMLAttributes } from 'react';
 import PlaceHolderImage from '../../../assets/placeholder-image.png';
-import { Post } from '../../../Interfaces/Post';
+import { Post, PostView } from '../../../Interfaces/Post';
 import { Card } from '../Card';
 
 import './styles.css';
 
 interface Props extends HTMLAttributes<HTMLUListElement> {
-    data: Post[] | null;
+    data: PostView[] | null;
     error: boolean;
     isLoading: boolean;
 }
@@ -29,7 +29,7 @@ function PostsList({ data, error, isLoading, ...rest }: Props) {
         return PlaceHolderImage;
     }
 
-    function readmeMore(post: Post) {
+    function readmeMore(post: PostView) {
         console.log('readmeMore', post);
     }
 
@@ -41,7 +41,7 @@ function PostsList({ data, error, isLoading, ...rest }: Props) {
                         <li key={post.id}>
                             <Link to={`post/${post.slug}`}>
                                 <Card.root>
-                                    <Card.image path={checkHasImage(post)} name={post.title} />
+                                    <Card.image path={post.mediaPath} name={post.title} />
                                     <Card.content post={post} />
                                     <Card.action onClick={() => readmeMore(post)} />
                                 </Card.root>
