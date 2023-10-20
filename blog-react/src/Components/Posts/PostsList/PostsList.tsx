@@ -1,18 +1,20 @@
 import { Link } from 'react-router-dom';
 import { HTMLAttributes } from 'react';
-import PlaceHolderImage from '../../../assets/placeholder-image.png';
-import { Post, PostView } from '../../../Interfaces/Post';
+import { Post } from '../../../Interfaces/Post';
 import { Card } from '../Card';
+import { checkHasImage, formaterPosts } from '../../../Utils/Api/formaterPosts';
 
 import './styles.css';
 
 interface Props extends HTMLAttributes<HTMLUListElement> {
-    data: PostView[] | null;
+    data: Post[] | null;
     error: boolean;
     isLoading: boolean;
 }
 
 function PostsList({ data, error, isLoading, ...rest }: Props) {
+    const formatedData = formaterPosts(data);
+
     if (isLoading) {
         return <div data-testid="loading">Loading...</div>;
     }
@@ -21,27 +23,19 @@ function PostsList({ data, error, isLoading, ...rest }: Props) {
         return <div data-testid="error">Error...</div>;
     }
 
-    function checkHasImage(post: Post) {
-        if (post.medias && post.medias.length > 0) {
-            return post.medias[0].path;
-        }
-
-        return PlaceHolderImage;
-    }
-
-    function readmeMore(post: PostView) {
+    function readmeMore(post: Post) {
         console.log('readmeMore', post);
     }
 
     return (
         <>
-            {data && (
+            {formatedData && (
                 <ul {...rest} className={`posts_list gap-4 ${rest.className}`}>
-                    {data.map((post) => (
+                    {formatedData.map((post) => (
                         <li key={post.id}>
                             <Link to={`post/${post.slug}`}>
                                 <Card.root>
-                                    <Card.image path={post.mediaPath} name={post.title} />
+                                    <Card.image path={checkHasImage(post).path} name={post.title} />
                                     <Card.content post={post} />
                                     <Card.action onClick={() => readmeMore(post)} />
                                 </Card.root>

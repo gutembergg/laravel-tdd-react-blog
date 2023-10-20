@@ -9,6 +9,11 @@ export type Media = {
     path: string;
 };
 
+type Author = {
+    id: number;
+    name: string;
+};
+
 export interface Post {
     id: number;
     title: string;
@@ -16,15 +21,6 @@ export interface Post {
     slug: string;
     author: string;
     categories?: Category[];
-    medias: Media[];
-}
-
-export interface PostView {
-    id: number;
-    title: string;
-    content: string;
-    slug: string;
-    author: string;
-    categories?: Category[];
-    mediaPath: string;
+    medias: Media[] | null;
+    created_at?: string;
 }

@@ -24,6 +24,16 @@ describe('<PostsList>', () => {
     test('should display placeholder image if not image from api', () => {
         const _dataSpy = {
             ...dataSpy,
+            data: [
+                {
+                    id: 1,
+                    title: 'test-title',
+                    content: 'test-description',
+                    slug: 'test-slug',
+                    author: 'test-author',
+                    medias: [],
+                },
+            ],
             isLoading: false,
             error: false,
         };
@@ -33,11 +43,41 @@ describe('<PostsList>', () => {
                 <PostsList data={_dataSpy.data} error={_dataSpy.error} isLoading={_dataSpy.isLoading} />
             </BrowserRouter>
         );
-        /* 
+
         const img: any = getByRole('img');
 
         const imgPlaceholderName = img.src.split('/').pop();
 
-        expect(imgPlaceholderName).toEqual('placeholder-image.png'); */
+        expect(imgPlaceholderName).toEqual('placeholder-image.png');
+    });
+
+    test('should display image from api', () => {
+        const _dataSpy = {
+            ...dataSpy,
+            data: [
+                {
+                    id: 1,
+                    title: 'test-title',
+                    content: 'test-description',
+                    slug: 'test-slug',
+                    author: 'test-author',
+                    medias: [{ id: 1, path: 'http://api/assets/api-image.png', name: 'test-image' }],
+                },
+            ],
+            isLoading: false,
+            error: false,
+        };
+
+        const { getByRole } = render(
+            <BrowserRouter>
+                <PostsList data={_dataSpy.data} error={_dataSpy.error} isLoading={_dataSpy.isLoading} />
+            </BrowserRouter>
+        );
+
+        const img: any = getByRole('img');
+
+        const imgPlaceholderName = img.src.split('/').pop();
+
+        expect(imgPlaceholderName).toEqual('api-image.png');
     });
 });

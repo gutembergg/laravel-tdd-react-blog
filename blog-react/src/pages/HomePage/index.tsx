@@ -3,13 +3,11 @@ import PostsList from '../../Components/Posts/PostsList/PostsList';
 import { useApiRequests } from '../../hooks/useApiRequest';
 import { Post } from '../../Interfaces/Post';
 import DefaultLayout from '../../layouts/DefaultLayout';
-import { formatApiResponseArray } from '../../Utils/Api/formaterApiResponse';
 
 import './styles.css';
 
 function HomePage() {
     const { data, error, isLoading } = useApiRequests<Post[]>('http://localhost/api/posts/');
-    const formatedData = formatApiResponseArray(data);
 
     return (
         <DefaultLayout>
@@ -25,7 +23,7 @@ function HomePage() {
                     </h1>
 
                     <div>
-                        <PostsList className="posts-list_animate" data={formatedData} error={error} isLoading={isLoading} />
+                        <PostsList className="posts-list_animate" data={data} error={error} isLoading={isLoading} />
                     </div>
                 </div>
 

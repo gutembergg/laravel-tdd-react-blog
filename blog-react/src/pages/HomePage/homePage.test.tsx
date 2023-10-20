@@ -85,34 +85,4 @@ describe('HomePage', () => {
 
         expect(error).toBeInTheDocument();
     });
-
-    test('should display image from api', () => {
-        const _dataSpy = {
-            ...dataSpy,
-            data: [
-                {
-                    id: 1,
-                    title: 'test-title',
-                    content: 'test-description',
-                    slug: 'test-slug',
-                    author: 'test-author',
-                    mediaPath: 'http://api/assets/api-image.png',
-                },
-            ],
-            isLoading: false,
-            error: false,
-        };
-
-        const { getByRole } = render(
-            <BrowserRouter>
-                <PostsList data={_dataSpy.data} error={_dataSpy.error} isLoading={_dataSpy.isLoading} />
-            </BrowserRouter>
-        );
-
-        const img: any = getByRole('img');
-
-        const imgPlaceholderName = img.src.split('/').pop();
-
-        expect(imgPlaceholderName).toEqual('api-image.png');
-    });
 });
