@@ -22,7 +22,7 @@ export const formaterPost = (post: Post) => ({
     created_at: post.created_at ? formaterDate(post.created_at) : '',
 });
 
-export const checkHasImage = (post: Post) => {
+export const checkHasImage = (post: Post): { path: string; name: string } => {
     if (post.medias) {
         return { path: post.medias[0].path, name: post.medias[0].name };
     }
@@ -30,7 +30,7 @@ export const checkHasImage = (post: Post) => {
     return { path: PlaceHolderImage, name: 'placeholder' };
 };
 
-const formaterDate = (date: string) => {
+const formaterDate = (date: string): string => {
     const event = new Date(date);
     const options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     return event.toLocaleDateString('fr-Fr', options);

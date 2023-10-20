@@ -5,7 +5,6 @@ import { BrowserRouter } from 'react-router-dom';
 import HomePage from '.';
 import * as useApiRequest from '../../hooks/useApiRequest';
 import { DataSpy } from '../../Tests/interfaces/PostsData';
-import PostsList from '../../Components/Posts/PostsList/PostsList';
 
 const useApiRequestSpy = vi.spyOn(useApiRequest, 'useApiRequests');
 

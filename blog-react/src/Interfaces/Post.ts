@@ -19,7 +19,7 @@ export interface Post {
     title: string;
     content: string;
     slug: string;
-    author: string;
+    author: Author;
     categories?: Category[];
     medias: Media[] | null;
     created_at?: string;

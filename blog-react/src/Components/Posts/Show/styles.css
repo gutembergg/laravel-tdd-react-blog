@@ -1,0 +1,9 @@
+.postHeader__image {
+    position: relative;
+    aspect-ratio: 900 / 400;
+    position: relative;
+    z-index: -2;
+    background: red;
+    overflow: hidden;
+    max-width: 900px;
+}

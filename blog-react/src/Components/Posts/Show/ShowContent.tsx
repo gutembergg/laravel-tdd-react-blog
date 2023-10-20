@@ -3,7 +3,7 @@ interface ShowContentProps {
 }
 
 function ShowContent({ content }: ShowContentProps) {
-    return <p className="max-w-[80%]">{content}</p>;
+    return <p className="text-center">{content}</p>;
 }
 
 export default ShowContent;

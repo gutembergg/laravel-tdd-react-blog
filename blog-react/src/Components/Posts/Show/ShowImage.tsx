@@ -1,10 +1,16 @@
+import './styles.css';
+
 interface ShowPostImageProps {
     path: string;
     name: string;
 }
 
 function ShowImage({ path, name }: ShowPostImageProps) {
-    return <img className="min-w-[700px] min-h-[400px] max-w-[700px] object-cover" src={path} alt={name} />;
+    return (
+        <div className="postHeader__image">
+            <img className="w-full object-cover" src={path} alt={name} />
+        </div>
+    );
 }
 
 export default ShowImage;

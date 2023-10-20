@@ -16,18 +16,19 @@ function ShowPost() {
 
     const formatedPost = formaterPost(data);
 
-    console.log('formatedPost', formatedPost);
-
     return (
         <DefaultLayout>
-            <Show.Root>
-                <Show.Image path={checkHasImage(formatedPost).path} name={formatedPost.title} />
-                <Show.Title title={formatedPost.title} />
-                <Show.Content content={formatedPost.content} />
-                <div>
-                    <Show.Date date={formatedPost.created_at} />
-                </div>
-            </Show.Root>
+            <div className="w-full my-auto flex items-center justify-center">
+                <Show.Root>
+                    <Show.Image path={checkHasImage(formatedPost).path} name={formatedPost.title} />
+                    <Show.Title title={formatedPost.title} />
+                    <Show.Content content={formatedPost.content} />
+                    <div className="w-full flex justify-between">
+                        <Show.Author name={formatedPost.author.name} />
+                        <Show.Date date={formatedPost.created_at} />
+                    </div>
+                </Show.Root>
+            </div>
         </DefaultLayout>
     );
 }
