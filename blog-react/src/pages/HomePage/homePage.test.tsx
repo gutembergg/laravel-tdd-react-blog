@@ -16,11 +16,7 @@ const dataSpy: DataSpy = {
 };
 
 const renderedComponent = () => {
-    return render(
-        <BrowserRouter>
-            <HomePage />
-        </BrowserRouter>
-    );
+    return render(<HomePage />, { wrapper: BrowserRouter });
 };
 
 describe('HomePage', () => {
