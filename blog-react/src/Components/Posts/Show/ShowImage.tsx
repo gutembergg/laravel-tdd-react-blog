@@ -8,7 +8,7 @@ interface ShowPostImageProps {
 function ShowImage({ path, name }: ShowPostImageProps) {
     return (
         <div className="postHeader__image">
-            <img className="w-full object-cover" src={path} alt={name} />
+            <img className="w-full object-cover" data-testid="postHeader" src={path} alt={name} />
         </div>
     );
 }

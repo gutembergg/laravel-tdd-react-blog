@@ -8,10 +8,14 @@ import { checkHasImage, formaterPost } from '../../Utils/Api/formaterPosts';
 function ShowPost() {
     const { slug } = useParams();
 
-    const { data } = useApiRequests<Post>(`http://localhost/api/posts/show/${slug}`);
+    const { data, error, isLoading } = useApiRequests<Post>(`http://localhost/api/posts/show/${slug}`);
 
-    if (!data) {
+    if (!data || error) {
         return <div>Not found</div>;
+    }
+
+    if (isLoading) {
+        return <div>Loading...</div>;
     }
 
     const formatedPost = formaterPost(data);
