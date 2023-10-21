@@ -87,23 +87,22 @@ class PostsTest extends TestCase
         $response->assertStatus(200);
 
         $response->assertJson(fn (AssertableJson $json) => $json
-            ->hasAll(['title', 'slug', 'content', 'link', 'comment_status', 'author_id', 'categories'])->etc()
+            ->hasAll(['data.title', 'data.slug', 'data.content', 'data.link', 'data.comment_status', 'data.author', 'data.categories'])->etc()
             ->whereAllType([
-                'title' => 'string',
-                'slug' => 'string',
-                'content' => 'string',
-                'link' => 'string',
-                'comment_status' => 'boolean',
-                'author_id' => 'integer',
-            ])
-            ->whereAll([
-                'title' => $post->title,
-                'slug' => $post->slug,
-                'content' => $post->content,
-                'link' => $post->link,
-                'comment_status' => $post->comment_status,
-                'author_id' => $post->author_id,
-                'categories.0.name' => $categories[0]->name,
+                'data.title' => 'string',
+                'data.slug' => 'string',
+                'data.content' => 'string',
+                'data.link' => 'string',
+                'data.comment_status' => 'boolean',
+            ]) 
+             ->whereAll([
+                'data.title' => $post->title,
+                'data.slug' => $post->slug,
+                'data.content' => $post->content,
+                'data.link' => $post->link,
+                'data.comment_status' => $post->comment_status,
+                'data.author.id' => $post->author_id,
+                'data.categories.0.name' => $categories[0]->name,
             ])
 
         );
@@ -265,4 +264,69 @@ class PostsTest extends TestCase
 
         $response->assertForbidden();
     }
+
+    public function test_posts_search_by_title(): void
+    {
+        $this->seed(CategoriesSeeder::class);
+
+        $author = Author::factory()->state([
+            'name' => 'AUTHOR_TEST_NAME',
+        ]);
+
+        $categories = Category::all();
+
+        $posts = Post::factory(10)->hasAttached($categories)->for($author)->create();
+
+        $response = $this->getJson(route('posts.search', ['search' => $posts[0]->title, 'direction' => 'desc']));
+
+        $response->assertStatus(200);
+
+        $this->assertCount(1, $response['data']);
+
+
+    }
+
+    public function test_posts_search_by_content(): void
+    {
+        $this->seed(CategoriesSeeder::class);
+
+        $author = Author::factory()->state([
+            'name' => 'AUTHOR_TEST_NAME',
+        ]);
+
+        $categories = Category::all();
+
+        $posts = Post::factory(10)->hasAttached($categories)->for($author)->create();
+    
+        $response = $this->getJson(route('posts.search', ['search' => $posts[0]->content, 'direction' => 'desc']));
+
+        $response->dump();
+        $response->assertStatus(200);
+
+        $this->assertCount(1, $response['data']);
+
+
+    }
+
+    public function test_posts_search_not_found(): void
+    {
+        $this->seed(CategoriesSeeder::class);
+
+        $author = Author::factory()->state([
+            'name' => 'AUTHOR_TEST_NAME',
+        ]);
+
+        $categories = Category::all();
+
+        $posts = Post::factory(10)->hasAttached($categories)->for($author)->create();
+
+        $response = $this->getJson(route('posts.search', ['search' => 'INVALID TITLE', 'direction' => 'desc']));
+
+        $response->assertStatus(200);
+
+        $this->assertCount(0, $response['data']);
+
+
+    }
+
 }

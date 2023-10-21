@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\QueryBuilders\Post\AdminLastPostsBuilder;
+use App\QueryBuilders\Post\PostQueryBuilder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,9 +28,9 @@ class Post extends Model
         'comment_status' => 'boolean',
     ];
 
-    public function newEloquentBuilder($query): AdminLastPostsBuilder
+    public function newEloquentBuilder($query): PostQueryBuilder
     {
-        return new AdminLastPostsBuilder($query);
+        return new PostQueryBuilder($query);
     }
 
     /**
