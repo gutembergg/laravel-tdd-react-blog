@@ -8,7 +8,7 @@ use App\Models\Media;
 
 class UploadImages
 {
-    public function handle(PostStoreRequest $request): Media | null
+    public function handle(PostStoreRequest $request): ?Media
     {
         $media = $request->file('media');
 

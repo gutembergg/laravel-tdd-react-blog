@@ -94,8 +94,8 @@ class PostsTest extends TestCase
                 'data.content' => 'string',
                 'data.link' => 'string',
                 'data.comment_status' => 'boolean',
-            ]) 
-             ->whereAll([
+            ])
+            ->whereAll([
                 'data.title' => $post->title,
                 'data.slug' => $post->slug,
                 'data.content' => $post->content,
@@ -166,12 +166,11 @@ class PostsTest extends TestCase
             'categories' => $categories,
         ],
 
-        ['media' => $file]
+            ['media' => $file]
 
         ));
 
-
-       // Storage::disk('local')->assertExists($file->hashName());
+        // Storage::disk('local')->assertExists($file->hashName());
 
         $this->assertDatabaseCount('category_post', 2);
 
@@ -265,6 +264,54 @@ class PostsTest extends TestCase
         $response->assertForbidden();
     }
 
+    public function test_posts_search_is_empyt(): void
+    {
+        $this->seed(CategoriesSeeder::class);
+
+        $numberOfPaginate = 6;
+
+        $author = Author::factory()->state([
+            'name' => 'AUTHOR_TEST_NAME',
+        ]);
+
+        $categories = Category::all();
+
+        Post::factory(10)->hasAttached($categories)->for($author)->create();
+
+        $response = $this->getJson(route('posts.search', ['search' => '', 'direction' => '']));
+
+        $response->assertStatus(200);
+
+        $response->assertValid(['search', 'direction']);
+
+        $this->assertCount($numberOfPaginate, $response['data']);
+
+    }
+
+    public function test_posts_search_direction_is_empyt_return_desc(): void
+    {
+        $this->seed(CategoriesSeeder::class);
+
+        $numberOfPaginate = 6;
+
+        $author = Author::factory()->state([
+            'name' => 'AUTHOR_TEST_NAME',
+        ]);
+
+        $categories = Category::all();
+
+        Post::factory(10)->hasAttached($categories)->for($author)->create();
+
+        $response = $this->getJson(route('posts.search', ['search' => 'AUTHOR_TEST_NAME', 'direction' => '']));
+
+        $response->assertStatus(200);
+
+        $response->assertValid(['search', 'direction']);
+
+        $this->assertCount($numberOfPaginate, $response['data']);
+
+    }
+
     public function test_posts_search_by_title(): void
     {
         $this->seed(CategoriesSeeder::class);
@@ -283,7 +330,6 @@ class PostsTest extends TestCase
 
         $this->assertCount(1, $response['data']);
 
-
     }
 
     public function test_posts_search_by_content(): void
@@ -297,10 +343,9 @@ class PostsTest extends TestCase
         $categories = Category::all();
 
         $posts = Post::factory(10)->hasAttached($categories)->for($author)->create();
-    
+
         $response = $this->getJson(route('posts.search', ['search' => $posts[0]->content, 'direction' => 'desc']));
 
-        $response->dump();
         $response->assertStatus(200);
 
         $this->assertCount(1, $response['data']);
@@ -317,7 +362,7 @@ class PostsTest extends TestCase
         $categories = Category::all();
 
         $posts = Post::factory(1)->hasAttached($categories)->for($author)->create();
-    
+
         $response = $this->getJson(route('posts.search', ['search' => $posts[0]->author->name, 'direction' => 'desc']));
 
         $response->assertStatus(200);
@@ -334,7 +379,7 @@ class PostsTest extends TestCase
 
         $categories = Category::all();
 
-        $posts = Post::factory(10)->hasAttached($categories)->for($author)->create();
+        Post::factory(10)->hasAttached($categories)->for($author)->create();
 
         $response = $this->getJson(route('posts.search', ['search' => 'INVALID TITLE', 'direction' => 'desc']));
 
@@ -343,5 +388,4 @@ class PostsTest extends TestCase
         $this->assertCount(0, $response['data']);
 
     }
-
 }

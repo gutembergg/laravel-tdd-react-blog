@@ -16,7 +16,6 @@ class PostTest extends TestCase
 {
     use RefreshDatabase;
 
-  
     public function test_admin_show_post(): void
     {
         $this->seed(RoleSeeder::class);
@@ -40,7 +39,7 @@ class PostTest extends TestCase
         $response->assertSee($post->title);
         $response->assertSee($post->slug);
         $response->assertSee($post->content);
-       // $response->assertSee($post->link, $escaped = true);
+        // $response->assertSee($post->link, $escaped = true);
         $response->assertSee($post->comment_status);
         $response->assertSee($categories[0]->name);
 

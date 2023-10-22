@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class ShowController extends Controller
 {
-    public function __invoke(Request $request): PostResource | JsonResponse
+    public function __invoke(Request $request): PostResource|JsonResponse
     {
         $postQuery = Post::query();
         $post = $postQuery->where('slug', $request->slug)->with('author', 'categories', 'medias')->get()->first();

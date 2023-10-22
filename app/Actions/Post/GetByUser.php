@@ -3,9 +3,9 @@
 namespace App\Actions\Post;
 
 use App\Models\Post;
-use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Support\Responsable;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 
 class GetByUser
 {

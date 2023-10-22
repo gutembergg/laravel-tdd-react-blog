@@ -24,3 +24,7 @@ export interface Post {
     medias: Media[] | null;
     created_at?: string;
 }
+
+export interface ApiData {
+    data: Post[] | null;
+}

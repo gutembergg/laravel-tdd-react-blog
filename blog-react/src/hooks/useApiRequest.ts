@@ -1,12 +1,7 @@
 import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 
-type Options = {
-    search?: string;
-    direction?: string;
-};
-
-export const useApiRequests = <T = any>(path: string, options?: Options) => {
+export const useApiRequests = <T = any>(path: string, options?: any, paginated = false) => {
     const [data, setData] = useState<T | null>(null);
     const [error, setError] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
@@ -17,13 +12,13 @@ export const useApiRequests = <T = any>(path: string, options?: Options) => {
                 params: options,
             });
 
-            setData(response.data);
+            setData(paginated ? response : response.data);
         } catch (error) {
             setError(true);
         } finally {
             setIsLoading(false);
         }
-    }, [options, path]);
+    }, [options, path, paginated]);
 
     useEffect(() => {
         fetchData();

@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import HomePage from '../pages/HomePage';
-import AllPosts from '../pages/AllPosts';
+import SearchPost from '../pages/SearchPost';
 import ShowPost from '../pages/ShowPost';
 
 export const router = createBrowserRouter([
@@ -10,7 +10,7 @@ export const router = createBrowserRouter([
     },
     {
         path: '/posts',
-        element: <AllPosts />,
+        element: <SearchPost />,
     },
     {
         path: '/post/:slug',
@@ -23,7 +23,7 @@ export const router = createBrowserRouter([
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<HomePage />}></Route>
-                <Route path="/posts" element={<AllPosts />}></Route>
+                <Route path="/posts" element={<SearchPost />}></Route>
             </Routes>
         </BrowserRouter>
     );
