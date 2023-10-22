@@ -304,7 +304,23 @@ class PostsTest extends TestCase
         $response->assertStatus(200);
 
         $this->assertCount(1, $response['data']);
+    }
 
+    public function test_posts_search_by_author(): void
+    {
+        $this->seed(CategoriesSeeder::class);
+
+        $author = Author::factory()->state([
+            'name' => 'AUTHOR_TEST_NAME',
+        ]);
+
+        $categories = Category::all();
+
+        $posts = Post::factory(1)->hasAttached($categories)->for($author)->create();
+    
+        $response = $this->getJson(route('posts.search', ['search' => $posts[0]->author->name, 'direction' => 'desc']));
+
+        $response->assertStatus(200);
 
     }
 
@@ -325,7 +341,6 @@ class PostsTest extends TestCase
         $response->assertStatus(200);
 
         $this->assertCount(0, $response['data']);
-
 
     }
 
