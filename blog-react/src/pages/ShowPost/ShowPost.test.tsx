@@ -8,7 +8,11 @@ import * as useApiRequest from '../../hooks/useApiRequest';
 const useApiRequestSpy = vi.spyOn(useApiRequest, 'useApiRequests');
 
 const mockDateUTC = '2023-10-12T21:24:18.000000Z';
+<<<<<<< HEAD
 const expectMockDateFormated = 'jeudi 12 octobre 2023';
+=======
+const mockDateFormated = 'jeudi 12 octobre 2023';
+>>>>>>> d1a7d97000970c55fdb655067a948b6e2bf0c25a
 
 const dataSpy = {
     data: {
@@ -21,7 +25,11 @@ const dataSpy = {
     },
     error: false,
     fetchData: vi.fn(),
+<<<<<<< HEAD
     isLoading: false,
+=======
+    isLoading: true,
+>>>>>>> d1a7d97000970c55fdb655067a948b6e2bf0c25a
 };
 
 const renderedComponent = () => {
@@ -36,6 +44,7 @@ const renderedComponent = () => {
 };
 
 describe('Show page', () => {
+<<<<<<< HEAD
     test('should display attributes page without medias', () => {
         useApiRequestSpy.mockReturnValue(dataSpy);
 
@@ -99,5 +108,16 @@ describe('Show page', () => {
         const { getByText } = renderedComponent();
 
         expect(getByText('Loading...')).toBeInTheDocument();
+=======
+    test('should display attributes page', () => {
+        useApiRequestSpy.mockReturnValue(dataSpy);
+
+        const { getByText } = renderedComponent();
+
+        expect(getByText(dataSpy.data.title)).toBeInTheDocument();
+        expect(getByText(dataSpy.data.content)).toBeInTheDocument();
+        expect(getByText(mockDateFormated)).toBeInTheDocument();
+        expect(getByText(dataSpy.data.author.name)).toBeInTheDocument();
+>>>>>>> d1a7d97000970c55fdb655067a948b6e2bf0c25a
     });
 });
