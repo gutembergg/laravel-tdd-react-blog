@@ -17,15 +17,3 @@ export const router = createBrowserRouter([
         element: <ShowPost />,
     },
 ]);
-
-/* export const router = () => {
-    return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<HomePage />}></Route>
-                <Route path="/posts" element={<SearchPost />}></Route>
-            </Routes>
-        </BrowserRouter>
-    );
-};
- */

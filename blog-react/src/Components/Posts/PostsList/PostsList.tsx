@@ -8,20 +8,10 @@ import './styles.css';
 
 interface Props extends HTMLAttributes<HTMLUListElement> {
     data: Post[] | null;
-    error: boolean;
-    isLoading: boolean;
 }
 
-function PostsList({ data, error, isLoading, ...rest }: Props) {
+function PostsList({ data, ...rest }: Props) {
     const formatedData = formaterPosts(data);
-
-    if (isLoading) {
-        return <div data-testid="loading">Loading...</div>;
-    }
-
-    if (error) {
-        return <div data-testid="error">Error...</div>;
-    }
 
     function readmeMore(post: Post) {
         console.log('readmeMore', post);
@@ -30,10 +20,10 @@ function PostsList({ data, error, isLoading, ...rest }: Props) {
     return (
         <>
             {formatedData && (
-                <ul {...rest} className={`posts_list gap-4 ${rest.className}`}>
+                <ul {...rest} className={`posts_list gap-4 ${rest.className && rest.className}`}>
                     {formatedData.map((post) => (
                         <li key={post.id}>
-                            <Link to={`post/${post.slug}`}>
+                            <Link to={'/post/' + post.slug}>
                                 <Card.root>
                                     <Card.image path={checkHasImage(post).path} name={post.title} />
                                     <Card.content post={post} />

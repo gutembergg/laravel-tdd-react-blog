@@ -1,9 +1,11 @@
-interface ShowContentProps {
+import { HTMLAttributes } from 'react';
+
+interface ShowContentProps extends HTMLAttributes<HTMLHeadingElement> {
     content: string;
 }
 
-function ShowContent({ content }: ShowContentProps) {
-    return <p className="text-center">{content}</p>;
+function ShowContent({ content, ...rest }: ShowContentProps) {
+    return <p className={`text-center ${rest.className}`}>{content}</p>;
 }
 
 export default ShowContent;

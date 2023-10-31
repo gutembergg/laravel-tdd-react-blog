@@ -22,7 +22,7 @@ export const useApiRequests = <T = any>(path: string, options?: any, paginated =
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [options]);
 
     return { data, error, fetchData, isLoading };
 };

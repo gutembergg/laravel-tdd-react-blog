@@ -13,7 +13,7 @@ function DefaultLayout({ children }: Props) {
                 <Header.Icon icon={SiMusicbrainz} />
                 <Header.Links />
             </Header.Root>
-            <div className="w-full h-[100vh]">{children}</div>
+            <div className="w-full min-h-screen bg-white dark:bg-slate-950">{children}</div>
         </div>
     );
 }

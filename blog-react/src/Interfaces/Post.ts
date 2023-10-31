@@ -28,3 +28,13 @@ export interface Post {
 export interface ApiData {
     data: Post[] | null;
 }
+
+export interface PaginationMeta {
+    current_page: number;
+    per_page: number;
+    total: number;
+}
+
+export interface IPagination {
+    meta: PaginationMeta;
+}

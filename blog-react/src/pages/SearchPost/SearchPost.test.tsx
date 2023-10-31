@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { describe, test, expect, vi } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
 import SearchPost from '.';
@@ -19,6 +19,11 @@ const dataSpy = {
                 created_at: '2023-10-12T21:24:18.000000Z',
             },
         ],
+        meta: {
+            current_page: 1,
+            per_page: 6,
+            total: 50,
+        },
     },
     error: false,
     fetchData: vi.fn(),
@@ -57,5 +62,29 @@ describe('<SearchPost>', () => {
         const { getByTestId } = renderedComponent();
 
         expect(getByTestId('loading')).toBeInTheDocument();
+    });
+
+    test('Should change pagination buttons', () => {
+        const _dataSpy = {
+            ...dataSpy,
+        };
+
+        useApiRequestSpy.mockReturnValue(_dataSpy);
+
+        const { getByRole, getByText } = renderedComponent();
+
+        const btn3 = getByRole('button', { name: '3' });
+
+        fireEvent.click(btn3);
+
+        expect(getByText('2')).toBeInTheDocument();
+        expect(getByText('3')).toBeInTheDocument();
+        expect(getByText('4')).toBeInTheDocument();
+
+        const btn4 = getByRole('button', { name: '4' });
+
+        fireEvent.click(btn4);
+
+        expect(getByText('5')).toBeInTheDocument();
     });
 });

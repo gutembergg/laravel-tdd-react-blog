@@ -40,7 +40,7 @@ describe('<PostsList>', () => {
 
         const { getByRole } = render(
             <BrowserRouter>
-                <PostsList data={_dataSpy.data} error={_dataSpy.error} isLoading={_dataSpy.isLoading} />
+                <PostsList data={_dataSpy.data} />
             </BrowserRouter>
         );
 
@@ -70,7 +70,7 @@ describe('<PostsList>', () => {
 
         const { getByRole } = render(
             <BrowserRouter>
-                <PostsList data={_dataSpy.data} error={_dataSpy.error} isLoading={_dataSpy.isLoading} />
+                <PostsList data={_dataSpy.data} />
             </BrowserRouter>
         );
 

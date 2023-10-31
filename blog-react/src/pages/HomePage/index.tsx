@@ -1,5 +1,7 @@
 import ImageBunner from '../../Components/HomePage/ImageBunner';
 import PostsList from '../../Components/Posts/PostsList/PostsList';
+import Error from '../../Components/Utils/Error';
+import Loading from '../../Components/Utils/Loading';
 import { useApiRequests } from '../../hooks/useApiRequest';
 import { Post } from '../../Interfaces/Post';
 import DefaultLayout from '../../layouts/DefaultLayout';
@@ -11,7 +13,7 @@ function HomePage() {
 
     return (
         <DefaultLayout>
-            <div className="flex flex-col  bg-slate-950">
+            <div className="flex flex-col bg-inherit">
                 <ImageBunner />
                 <div className="content w-[90%] mx-auto">
                     <h1
@@ -22,9 +24,15 @@ function HomePage() {
                         Derniers articles
                     </h1>
 
-                    <div>
-                        <PostsList className="posts-list_animate" data={data} error={error} isLoading={isLoading} />
-                    </div>
+                    {error && <Error />}
+
+                    {isLoading && <Loading />}
+
+                    {data && (
+                        <div>
+                            <PostsList className="posts-list_animate" data={data} />
+                        </div>
+                    )}
                 </div>
 
                 <footer>Footer</footer>

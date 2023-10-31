@@ -4,6 +4,7 @@ import { useApiRequests } from '../../hooks/useApiRequest';
 import DefaultLayout from '../../layouts/DefaultLayout';
 import { Post } from '../../Interfaces/Post';
 import { checkHasImage, formaterPost } from '../../Utils/Api/formaterPosts';
+import Loading from '../../Components/Utils/Loading';
 
 function ShowPost() {
     const { slug } = useParams();
@@ -15,7 +16,7 @@ function ShowPost() {
     }
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <Loading />;
     }
 
     const formatedPost = formaterPost(data);
@@ -25,11 +26,11 @@ function ShowPost() {
             <div className="w-full my-auto flex items-center justify-center">
                 <Show.Root>
                     <Show.Image path={checkHasImage(formatedPost).path} name={formatedPost.title} />
-                    <Show.Title title={formatedPost.title} />
-                    <Show.Content content={formatedPost.content} />
+                    <Show.Title className="text-white" title={formatedPost.title} />
+                    <Show.Content className="text-white" content={formatedPost.content} />
                     <div className="w-full flex justify-between">
-                        <Show.Author name={formatedPost.author.name} />
-                        <Show.Date date={formatedPost.created_at} />
+                        <Show.Author className="text-white" name={formatedPost.author.name} />
+                        <Show.Date className="text-white" date={formatedPost.created_at} />
                     </div>
                 </Show.Root>
             </div>
